@@ -1,18 +1,14 @@
 import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
-import { Sidebar } from "@/components/layout/Sidebar";
 import { AdSlot } from "@/components/ui/AdSlot";
-import { getHomeData } from "@/services/articleService";
 
 export const metadata: Metadata = {
   title: "Contact Us — EsportFilter",
   description: "Contact EsportFilter newsroom, submit news tips, or fill out our Google contact form.",
 };
 
-export default async function ContactPage() {
-  const { headlines } = await getHomeData();
-
+export default function ContactPage() {
   return (
     <div className="w-full font-sans">
       {/* Breadcrumb */}
@@ -31,7 +27,7 @@ export default async function ContactPage() {
 
       {/* Main Contact Us Container (max-w-[600px] form layout per Section 25) */}
       <section className="py-8 pb-[60px]">
-        <div className="wrap grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-10 items-start">
+        <div className="wrap flex justify-center items-start">
           <div className="max-w-[600px] w-full">
             <h1 className="text-2xl md:text-3xl font-bold tracking-tight leading-tight text-[var(--ink)] mb-2 font-sans">
               CONTACT US
@@ -89,7 +85,6 @@ export default async function ContactPage() {
             </div>
           </div>
 
-          <Sidebar trendingArticles={headlines} gameTitle="Contact" />
         </div>
       </section>
     </div>

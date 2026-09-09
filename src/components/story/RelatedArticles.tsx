@@ -26,8 +26,7 @@ export function RelatedArticles({
     <div className="pt-10 mt-3 border-t-2 border-[var(--ink)] mb-6">
       {/* Game Related Header */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-[18px] font-heading flex items-center gap-2.5 text-[var(--ink)]">
-          <span className="w-[5px] h-[18px] bg-[var(--brand)] inline-block" />
+        <h2 className="text-[18px] font-heading font-bold uppercase tracking-wide text-[var(--ink)]">
           More on {gameName}
         </h2>
         <span className="text-[11.5px] text-[var(--ink-faint)] font-sans">
@@ -38,7 +37,7 @@ export function RelatedArticles({
       {/* Grid of Related Articles (up to 6) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4.5 mb-10">
         {displayRelated.map((item) => (
-          <Link key={item.id} href={`/${item.slug}`} className="group block">
+          <Link key={item.id} href={`/story/${item.slug}`} className="group block">
             <div className="overflow-hidden mb-2.5">
               <img
                 src={item.featuredImageUrl || item.imageUrl}
@@ -67,8 +66,7 @@ export function RelatedArticles({
       {authorRelated.length > 0 && authorName && (
         <div className="pt-6 border-t border-[var(--line)]">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-[17px] font-heading flex items-center gap-2 text-[var(--ink)]">
-              <span className="w-[4px] h-[17px] bg-[var(--brand)] inline-block" />
+            <h2 className="text-[17px] font-heading font-bold uppercase tracking-wide text-[var(--ink)]">
               More from {authorName}
             </h2>
             {authorSlug && (
@@ -82,7 +80,7 @@ export function RelatedArticles({
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {authorRelated.slice(0, 3).map((item) => (
-              <Link key={item.id} href={`/${item.slug}`} className="group block">
+              <Link key={item.id} href={`/story/${item.slug}`} className="group block">
                 <div className="overflow-hidden mb-2">
                   <img
                     src={item.featuredImageUrl || item.imageUrl}

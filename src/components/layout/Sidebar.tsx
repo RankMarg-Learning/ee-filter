@@ -20,46 +20,35 @@ export function Sidebar({ trendingArticles, gameTitle = "Esports" }: SidebarProp
       {/* Top Ad Slot */}
       <AdSlot type="300x250" />
 
-      {/* Trending Stories Widget */}
-      {trendingArticles && trendingArticles.length > 0 && (
-        <div className="border border-[var(--line)] bg-[var(--card-bg)]">
-          <div className="bg-[var(--sidebar-head-bg)] text-[var(--sidebar-head-ink)] px-4 py-3 flex items-center justify-between">
-            <h3 className="font-heading text-[13px] uppercase tracking-wider font-semibold flex items-center gap-2">
-              <span className="w-1.5 h-3.5 bg-[var(--brand)] inline-block" />
-              Trending in {gameTitle}
-            </h3>
-            <span className="text-[10px] font-mono text-[var(--brand)] uppercase tracking-widest font-bold">
-              HOT
-            </span>
-          </div>
 
-          <ul className="list-none m-0 p-0">
-            {trendingArticles.map((item, idx) => (
-              <li
-                key={item.id || idx}
-                className="flex gap-3.5 items-start px-4 py-3.5 border-b border-[var(--line)] last:border-b-0 hover:bg-[var(--bg-alt)] transition-colors group"
-              >
-                <span className="font-mono text-[16px] font-bold text-[var(--ink-faint)] w-5 flex-shrink-0 pt-0.5 group-hover:text-[var(--brand)] transition-colors">
-                  0{idx + 1}
-                </span>
-                <div className="flex-1 min-w-0">
-                  <Link
-                    href={`/${item.slug}`}
-                    className="text-[13.5px] font-semibold leading-snug block mb-1 text-[var(--ink)] group-hover:text-[var(--brand)] transition-colors line-clamp-2"
-                  >
-                    {item.title}
-                  </Link>
-                  <div className="flex items-center gap-2 text-[11px] text-[var(--ink-faint)] font-mono">
-                    <span>{item.gameName}</span>
-                    <span>·</span>
-                    <span>{item.timeAgo}</span>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
+      {/* Deep Dives & Analysis - Curated High Value Content */}
+      <div className=" bg-[var(--card-bg)] ">
+        <div className=" px-4 py-3">
+          <h3 className="font-heading text-[13px] uppercase tracking-wider font-bold flex items-center gap-2 text-[var(--ink)]">
+            <svg className="w-3.5 h-3.5 text-[var(--brand)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            Deep Dives
+          </h3>
         </div>
-      )}
+        <div className="flex flex-col">
+          {[
+            { title: "Why the current meta is fundamentally changing competitive integrity", tag: "Analysis", game: "Valorant" },
+            { title: "The untold story of Faker's first World Championship run", tag: "Retrospective", game: "LoL" },
+            { title: "Breaking down the economic collapse of Tier 2 organizations", tag: "Opinion", game: "Industry" }
+          ].map((article, i) => (
+            <Link key={i} href="#" className="group flex flex-col px-4 py-3.5 border-b border-[var(--line)] last:border-b-0 hover:bg-[var(--bg-alt)] transition-colors">
+              <span className="text-[10px] font-mono font-bold text-[var(--brand)] uppercase tracking-widest block mb-1.5 group-hover:translate-x-0.5 transition-transform">
+                {article.tag}
+              </span>
+              <h4 className="text-[13px] font-bold text-[var(--ink)] leading-snug group-hover:text-[var(--brand)] transition-colors line-clamp-2 mb-2">
+                {article.title}
+              </h4>
+              <span className="text-[10px] text-[var(--ink-faint)] font-mono">{article.game}</span>
+            </Link>
+          ))}
+        </div>
+      </div>
 
       {/* Popular Game Hubs Quick Access */}
       <div className="border border-[var(--line)] bg-[var(--card-bg)] p-4">

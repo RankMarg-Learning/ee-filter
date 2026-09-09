@@ -38,11 +38,10 @@ export function Header() {
               <Link
                 key={item.label}
                 href={item.href}
-                className={`text-sm py-1 border-b-2 transition-colors ${
-                  isActive
-                    ? "font-semibold text-[var(--ink)] border-[var(--brand)]"
-                    : "font-medium text-[var(--ink-dim)] border-transparent hover:text-[var(--ink)]"
-                }`}
+                className={`text-sm py-1 border-b-2 transition-colors ${isActive
+                  ? "font-semibold text-[var(--ink)] border-[var(--brand)]"
+                  : "font-medium text-[var(--ink-dim)] border-transparent hover:text-[var(--ink)]"
+                  }`}
               >
                 {item.label}
               </Link>
@@ -52,25 +51,12 @@ export function Header() {
 
         {/* Header Actions */}
         <div className="flex items-center gap-3">
-          {/* Search Trigger */}
-          <button
-            onClick={() => setSearchOpen(!searchOpen)}
-            className="icon-btn border border-[var(--line)] w-9 h-9 rounded-[6px] flex items-center justify-center cursor-pointer bg-transparent text-[var(--ink-dim)] hover:text-[var(--ink)] hover:border-[var(--brand)] transition-colors"
-            aria-label="Search articles"
-          >
-            <svg className="w-4 h-4 stroke-current fill-none" viewBox="0 0 24 24" strokeWidth="2">
-              <circle cx="11" cy="11" r="7" />
-              <path d="M21 21l-4.3-4.3" />
-            </svg>
-          </button>
+
 
           {/* Theme Toggle Button */}
           <ThemeToggle />
 
-          {/* Primary Action Button (Section 12: 40px height, 14px font-semibold, 6px radius) */}
-          <button className="bg-[var(--brand)] text-white border-none h-[40px] px-4 rounded-[6px] font-semibold text-sm cursor-pointer hover:bg-[var(--brand-dark)] transition-colors font-sans hidden sm:block">
-            Sign up free
-          </button>
+
         </div>
       </div>
 
@@ -110,11 +96,10 @@ export function Header() {
               <li key={game.slug}>
                 <Link
                   href={targetHref}
-                  className={`flex items-center h-full px-3.5 text-[12.5px] font-semibold transition-colors border-r border-[var(--line)] ${
-                    isActive
-                      ? "bg-[var(--bg-alt)] text-[var(--ink)] border-b-2 border-b-[var(--brand)]"
-                      : "text-[var(--ink-dim)] hover:bg-[var(--bg-alt)] hover:text-[var(--ink)]"
-                  }`}
+                  className={`flex items-center h-full px-3.5 text-[12.5px] font-semibold transition-colors border-r border-[var(--line)] ${isActive
+                    ? "bg-[var(--bg-alt)] text-[var(--ink)] border-b-2 border-b-[var(--brand)]"
+                    : "text-[var(--ink-dim)] hover:bg-[var(--bg-alt)] hover:text-[var(--ink)]"
+                    }`}
                 >
                   {game.name}
                 </Link>

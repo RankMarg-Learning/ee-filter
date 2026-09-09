@@ -27,7 +27,7 @@ export function HeroSection({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           {/* Main Story (7 Cols / 60%) */}
           <div className="lg:col-span-7 flex flex-col">
-            <Link href={`/${leadStory.slug}`} className="group block">
+            <Link href={`/story/${leadStory.slug}`} className="group block">
               {/* 16:9 Image per Section 8 & 12 */}
               <div className="overflow-hidden rounded-[8px] mb-3 aspect-[16/9] bg-[var(--bg-alt)] border border-[var(--line)]">
                 <img
@@ -69,7 +69,6 @@ export function HeroSection({
           <div className="lg:col-span-5 flex flex-col gap-5">
             <div className="flex justify-between items-center mb-1">
               <h2 className="text-xl font-bold tracking-tight flex items-center gap-2 text-[var(--ink)]">
-                <span className="w-[5px] h-[19px] bg-[var(--brand)] inline-block" />
                 Top Stories
               </h2>
             </div>
@@ -77,7 +76,7 @@ export function HeroSection({
             {secondaryCards.map((story) => (
               <Link
                 key={story.id}
-                href={`/${story.slug}`}
+                href={`/story/${story.slug}`}
                 className="group flex flex-col sm:flex-row gap-3.5 pb-4 border-b border-[var(--line)] last:border-b-0 last:pb-0"
               >
                 {/* 16:9 Image per Section 12 */}
@@ -111,7 +110,6 @@ export function HeroSection({
         <div className="pt-5 border-t border-[var(--line)]">
           <div className="flex justify-between items-center mb-3">
             <h2 className="text-xl font-bold tracking-tight flex items-center gap-2 text-[var(--ink)]">
-              <span className="w-[5px] h-[19px] bg-[var(--brand)] inline-block" />
               Latest Headlines
             </h2>
           </div>
@@ -120,7 +118,7 @@ export function HeroSection({
             {headlines.slice(0, 4).map((item) => (
               <Link
                 key={item.id}
-                href={`/${item.slug}`}
+                href={`/story/${item.slug}`}
                 className="group flex gap-2.5 p-3 bg-[var(--bg-alt)] border border-[var(--line)] rounded-[8px] hover:border-[var(--brand)] transition-colors"
               >
                 <span className="font-mono text-xs text-[var(--brand)] font-bold w-4 flex-shrink-0 pt-0.5">

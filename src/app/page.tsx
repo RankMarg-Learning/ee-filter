@@ -64,7 +64,7 @@ export default async function HomePage() {
       />
 
       {/* Main Feed Section with Trending Sidebar (Section 42 & 43) */}
-      <MainFeedSection feedStories={data.feedStories} />
+      <MainFeedSection feedStories={data.feedStories} headlines={data.headlines} />
     </div>
   );
 }

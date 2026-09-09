@@ -25,7 +25,6 @@ export function CategorySection({
       <div className="wrap">
         <div className="flex justify-between items-center mb-5">
           <h2 className="text-xl font-bold tracking-tight flex items-center gap-2.5 text-[var(--ink)]">
-            <span className="w-[5px] h-[19px] bg-[var(--brand)] inline-block" />
             {title}
           </h2>
           <Link
@@ -38,7 +37,7 @@ export function CategorySection({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {displayArticles.map((story) => (
-            <Link key={story.id} href={`/${story.slug}`} className="group block">
+            <Link key={story.id} href={`/story/${story.slug}`} className="group block">
               {/* 16:9 Aspect Ratio Image per Section 12 */}
               <div className="overflow-hidden rounded-[8px] mb-2.5 aspect-[16/9] bg-[var(--bg-alt)] border border-[var(--line)]">
                 <img

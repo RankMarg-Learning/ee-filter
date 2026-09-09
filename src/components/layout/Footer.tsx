@@ -8,9 +8,7 @@ export function Footer() {
       {/* Sponsor Strip */}
       <div className="bg-[#12151b] dark:bg-[#07090d] py-4 border-t border-[var(--line)]">
         <div className="wrap flex items-center justify-center gap-[36px] flex-wrap">
-          <span className="text-[#8A93A1] text-[11px] tracking-wider uppercase font-mono">
-            This section brought to you by
-          </span>
+
           <AdSlot type="160x50" />
           <AdSlot type="160x50" />
           <AdSlot type="160x50" />

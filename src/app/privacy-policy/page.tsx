@@ -1,18 +1,14 @@
 import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
-import { Sidebar } from "@/components/layout/Sidebar";
 import { AdSlot } from "@/components/ui/AdSlot";
-import { getHomeData } from "@/services/articleService";
 
 export const metadata: Metadata = {
   title: "Privacy & Cookie Policy — EsportFilter",
   description: "Formal Privacy Policy and EU GDPR Cookie Compliance document for EsportFilter.",
 };
 
-export default async function PrivacyPolicyPage() {
-  const { headlines } = await getHomeData();
-
+export default function PrivacyPolicyPage() {
   return (
     <div className="w-full">
       {/* Breadcrumb */}
@@ -46,7 +42,7 @@ export default async function PrivacyPolicyPage() {
 
       {/* Main Content Split */}
       <section className="py-8 pb-[60px]">
-        <div className="wrap grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-[40px] items-start">
+        <div className="wrap flex justify-center items-start">
           <div className="space-y-6 text-[15px] text-[var(--ink)] leading-relaxed font-sans max-w-[70ch]">
             <h2 className="text-[22px] font-heading font-semibold text-[var(--ink)] border-b border-[var(--line)] pb-2">
               1. Data Controller & Scope
@@ -109,7 +105,6 @@ export default async function PrivacyPolicyPage() {
             </p>
           </div>
 
-          <Sidebar trendingArticles={headlines} gameTitle="Privacy" />
         </div>
       </section>
     </div>

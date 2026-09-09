@@ -40,7 +40,7 @@ export function FloatingNextStory({ article }: FloatingNextStoryProps) {
           ✕
         </button>
       </div>
-      <Link href={`/${article.slug}`} className="group block">
+      <Link href={`/story/${article.slug}`} className="group block">
         <h4 className="text-[13.5px] font-semibold text-[var(--ink)] group-hover:text-[var(--brand)] transition-colors leading-snug line-clamp-2 mb-1">
           {article.title}
         </h4>

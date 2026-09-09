@@ -1,18 +1,14 @@
 import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
-import { Sidebar } from "@/components/layout/Sidebar";
 import { AdSlot } from "@/components/ui/AdSlot";
-import { getHomeData } from "@/services/articleService";
 
 export const metadata: Metadata = {
   title: "Advertise — EsportFilter",
   description: "Media kit, audience demographics, ad format specifications, and partnership contact details for EsportFilter.",
 };
 
-export default async function AdvertisePage() {
-  const { headlines } = await getHomeData();
-
+export default function AdvertisePage() {
   return (
     <div className="w-full">
       {/* Breadcrumb */}
@@ -46,7 +42,7 @@ export default async function AdvertisePage() {
 
       {/* Main Content & Demographics Split */}
       <section className="py-8 pb-[60px]">
-        <div className="wrap grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-[40px] items-start">
+        <div className="wrap flex justify-center items-start">
           <div className="space-y-8 max-w-[70ch]">
             {/* Demographics Grid */}
             <div>
@@ -129,7 +125,6 @@ export default async function AdvertisePage() {
             </div>
           </div>
 
-          <Sidebar trendingArticles={headlines} gameTitle="Advertise" />
         </div>
       </section>
     </div>

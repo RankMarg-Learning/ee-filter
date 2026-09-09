@@ -41,7 +41,7 @@ export function ArticleBody({ article }: ArticleBodyProps) {
 
             {/* Blockquote */}
             {article.quote && (
-              <blockquote className="border-l-3 border-[var(--brand)] pl-4 my-6 font-sans font-medium text-base text-[var(--ink)]">
+              <blockquote className="border-l-4 border-[var(--ink)] pl-5 my-8 font-sans font-medium text-lg text-[var(--ink)] italic bg-[var(--bg-alt)] py-3 pr-4 rounded-r-md">
                 "{article.quote.text}"
                 <cite className="block font-sans font-semibold text-xs text-[var(--ink-faint)] mt-2 not-italic">
                   — {article.quote.cite}

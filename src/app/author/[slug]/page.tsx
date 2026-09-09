@@ -54,7 +54,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
   const authorArticles = allArticles.filter(
     (a) => a.author && a.author.name.toLowerCase().replace(/\s+/g, "-") === slug.toLowerCase()
   );
-  
+
   const displayArticles = authorArticles.length > 0 ? authorArticles : allArticles.slice(0, 4);
   const authorInfo = authorArticles[0]?.author || {
     name: name,
@@ -108,51 +108,54 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
         </div>
       </div>
 
-      {/* Author Articles Feed Grid */}
-      <section className="py-8 pb-[50px]">
+      {/* Main Content Area (Split Layout) */}
+      <section className="pt-8 pb-[80px]">
         <div className="wrap grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-[30px] items-start">
+          
+          {/* Main Feed Column */}
           <div className="feed-col flex flex-col">
-            <h2 className="text-[19px] font-heading flex items-center gap-2.5 text-[var(--ink)] mb-4">
-              <span className="w-[5px] h-[19px] bg-[var(--brand)] inline-block" />
-              Articles by {authorInfo.name}
-            </h2>
+            <div className="mb-6 border-b-2 border-[var(--ink)] pb-2">
+              <h2 className="text-[18px] font-heading font-bold text-[var(--ink)] uppercase tracking-wide">
+                Articles by {authorInfo.name}
+              </h2>
+            </div>
 
+            {/* List Feed */}
             <div className="flex flex-col">
               {displayArticles.map((item, idx) => (
                 <Link
                   key={item.id || idx}
-                  href={`/${item.slug}`}
-                  className="group flex flex-col sm:flex-row gap-4 py-4 border-b border-[var(--line)]"
+                  href={`/story/${item.slug}`}
+                  className="group flex flex-col sm:flex-row gap-5 py-5 border-b border-[var(--line)]"
                 >
-                  <img
-                    src={item.featuredImageUrl || item.imageUrl}
-                    alt={item.title}
-                    className="w-full sm:w-[170px] h-[180px] sm:h-[112px] object-cover flex-shrink-0"
-                  />
-                  <div className="fi-body min-w-0 flex-1">
+                  <div className="w-full sm:w-[220px] aspect-[16/9] sm:aspect-auto sm:h-[130px] overflow-hidden flex-shrink-0">
+                    <img
+                      src={item.featuredImageUrl || item.imageUrl}
+                      alt={item.title}
+                      className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="flex flex-col justify-center">
                     <CategoryPill
                       type={item.category}
                       label={item.categoryLabel}
-                      className="text-[10px] px-1.5 py-0.5"
+                      className="text-[10px] px-1.5 py-0.5 mb-2 self-start"
                     />
-                    <h3 className="text-[16.5px] font-semibold font-sans my-1.5 leading-snug text-[var(--ink)] group-hover:text-[var(--brand)] transition-colors">
+                    <h3 className="text-[18px] font-bold text-[var(--ink)] group-hover:text-[var(--brand)] transition-colors leading-snug mb-2">
                       {item.title}
                     </h3>
-                    {(item.excerpt || item.dek) && (
-                      <p className="text-[13px] text-[var(--ink-dim)] mb-2 max-w-[62ch] leading-relaxed">
-                        {item.excerpt || item.dek}
-                      </p>
-                    )}
-                    <span className="text-[11.5px] text-[var(--ink-faint)] block font-sans">
-                      {item.gameName || item.game} · {item.publishedAt}
-                    </span>
+                    <div className="text-[var(--ink-faint)] font-sans text-[12px] mt-auto">
+                      {item.gameName || item.game} • {item.publishedAt}
+                    </div>
                   </div>
                 </Link>
               ))}
             </div>
           </div>
 
-          <Sidebar trendingArticles={headlines} gameTitle="Esports" />
+          {/* Right Sticky Sidebar */}
+          <Sidebar trendingArticles={headlines} />
+
         </div>
       </section>
     </div>
