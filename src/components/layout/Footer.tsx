@@ -18,7 +18,7 @@ export function Footer() {
       {/* Main Footer */}
       <footer className="bg-[#0E1116] text-[#B7BEC9] pt-[44px] pb-[24px] border-t border-[#262B33]">
         <div className="wrap">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr] gap-8 pb-[30px] border-b border-[#262B33] mb-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] gap-8 pb-[30px] border-b border-[#262B33] mb-5">
             {/* Brand column */}
             <div className="footer-brand">
               <Link href="/" className="font-heading font-bold text-[23px] text-white block mb-3">
@@ -37,9 +37,8 @@ export function Footer() {
               <ul className="list-none p-0 flex flex-col gap-2.5 text-[12.5px]">
                 <li><Link href="/game/valorant" className="text-[#8991A0] hover:text-white transition-colors">Valorant</Link></li>
                 <li><Link href="/game/cs2" className="text-[#8991A0] hover:text-white transition-colors">Counter-Strike 2</Link></li>
-                <li><Link href="/game/rainbow-six" className="text-[#8991A0] hover:text-white transition-colors">Rainbow Six Siege</Link></li>
-                <li><Link href="/game/call-of-duty" className="text-[#8991A0] hover:text-white transition-colors">Call of Duty</Link></li>
                 <li><Link href="/game/pubg" className="text-[#8991A0] hover:text-white transition-colors">PUBG</Link></li>
+                <li><Link href="/game/free-fire" className="text-[#8991A0] hover:text-white transition-colors">Free Fire</Link></li>
               </ul>
             </div>
 
@@ -52,19 +51,6 @@ export function Footer() {
                 <li><Link href="/game/league-of-legends" className="text-[#8991A0] hover:text-white transition-colors">League of Legends</Link></li>
                 <li><Link href="/game/dota2" className="text-[#8991A0] hover:text-white transition-colors">Dota 2</Link></li>
                 <li><Link href="/game/mlbb" className="text-[#8991A0] hover:text-white transition-colors">MLBB</Link></li>
-              </ul>
-            </div>
-
-            {/* Fighting & Sports column */}
-            <div className="footer-col">
-              <h4 className="text-[12px] text-white font-bold mb-3 uppercase tracking-wider font-heading">
-                Fighting & Sports
-              </h4>
-              <ul className="list-none p-0 flex flex-col gap-2.5 text-[12.5px]">
-                <li><Link href="/game/tekken-8" className="text-[#8991A0] hover:text-white transition-colors">Tekken 8</Link></li>
-                <li><Link href="/game/street-fighter" className="text-[#8991A0] hover:text-white transition-colors">Street Fighter</Link></li>
-                <li><Link href="/game/ea-fc" className="text-[#8991A0] hover:text-white transition-colors">EA FC</Link></li>
-                <li><Link href="/game/rocket-league" className="text-[#8991A0] hover:text-white transition-colors">Rocket League</Link></li>
               </ul>
             </div>
 

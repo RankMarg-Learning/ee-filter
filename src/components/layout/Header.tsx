@@ -13,11 +13,11 @@ export function Header() {
 
   const mainNavItems = [
     { label: "Home", href: "/" },
-    { label: "News", href: "/category/news" },
-    { label: "Recap", href: "/category/recap" },
-    { label: "Rankings", href: "/category/rankings" },
-    { label: "Guides", href: "/category/guide" },
-    { label: "Community", href: "/category/community" },
+    { label: "Breaking News", href: "/category/breaking-news" },
+    { label: "Roster Moves", href: "/category/roster-move" },
+    { label: "Rumours", href: "/category/rumor" },
+    { label: "Game Updates", href: "/category/game-update" },
+    { label: "Tournament Preview", href: "/category/tournament-preview" },
   ];
 
   return (

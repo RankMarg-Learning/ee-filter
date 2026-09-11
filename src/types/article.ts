@@ -55,7 +55,7 @@ export interface Article {
   updatedAt?: string;
   createdAt?: string;
   tags?: Tag[];
-  
+
   // Optional formatting lists
   paragraphs?: string[];
   quote?: {

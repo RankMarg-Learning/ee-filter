@@ -125,7 +125,7 @@ export function HeroSection({
                   {item.number}
                 </span>
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-xs font-semibold leading-snug block mb-1 text-[var(--ink)] group-hover:text-[var(--brand)] transition-colors line-clamp-2">
+                  <h3 className="text-xs font-semibold leading-snug mb-1 text-[var(--ink)] group-hover:text-[var(--brand)] transition-colors line-clamp-2">
                     {item.title}
                   </h3>
                   <span className="text-[11px] text-[var(--ink-faint)] font-normal block truncate">

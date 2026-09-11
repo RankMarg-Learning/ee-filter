@@ -14,17 +14,29 @@ interface CategoryPageProps {
 }
 
 const KNOWN_CATEGORIES = [
-  "breaking",
-  "recap",
+  "match-recap",
+  "roster-move",
   "analysis",
-  "roster",
-  "rumor",
-  "preview",
-  "guide",
   "interview",
+  "feature",
+  "breaking-news",
+  "opinion",
+  "tournament-preview",
+  "patch-analysis",
+  "guide",
+  "rumor",
   "community",
-  "news",
-  "rankings",
+  "meta-report",
+  "industry",
+  "match-preview",
+  "tournament-recap",
+  "player-profile",
+  "team-profile",
+  "game-update",
+  "lore",
+  "cosplay",
+  "fan-art",
+  "other",
 ];
 
 export async function generateStaticParams() {
