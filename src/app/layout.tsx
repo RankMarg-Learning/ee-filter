@@ -66,7 +66,7 @@ export default function RootLayout({
             <div className="w-full max-w-[1920px] mx-auto flex justify-center items-start md:px-4 px-2 md:pt-4 pt-2 pb-8 gap-5 xl:gap-6">
               <div id="global-ad-left" className="hidden xl:block w-[160px] min-[1840px]:w-[300px] shrink-0 sticky top-4">
               </div>
-              <div className="w-full max-w-[1160px] shrink min-w-0 bg-[var(--bg)] shadow-[0_0_40px_rgba(0,0,0,0.03)] border-x border-[var(--line)]">
+              <div className="w-full max-w-[1160px] shrink min-w-0 bg-[var(--bg)] ">
                 {children}
               </div>
               <div id="global-ad-right" className="hidden xl:block w-[160px] min-[1840px]:w-[300px] shrink-0 sticky top-4">

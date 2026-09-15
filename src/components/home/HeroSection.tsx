@@ -1,7 +1,6 @@
-import React from "react";
 import Link from "next/link";
 import { Article, Headline } from "@/types/article";
-import { CategoryPill } from "@/components/ui/CategoryPill";
+
 
 interface HeroSectionProps {
   leadStory: Article;
@@ -38,11 +37,7 @@ export function HeroSection({
               </div>
 
               <div>
-                <CategoryPill
-                  type={leadStory.category}
-                  label={leadStory.categoryLabel}
-                  className="mb-2"
-                />
+
 
                 {/* Main Story Title (28-32px / 1.15 per Section 9) */}
                 <h1 className="text-2xl md:text-3xl font-bold tracking-tight leading-tight text-[var(--ink)] group-hover:text-[var(--brand)] transition-colors mb-2">
@@ -88,11 +83,7 @@ export function HeroSection({
                   />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <CategoryPill
-                    type={story.category}
-                    label={story.categoryLabel}
-                    className="mb-1.5"
-                  />
+
                   {/* Secondary Story Title (16-18px per Section 9) */}
                   <h3 className="text-base font-semibold leading-snug text-[var(--ink)] group-hover:text-[var(--brand)] transition-colors line-clamp-2 mb-1">
                     {story.title}

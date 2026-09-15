@@ -1,12 +1,11 @@
-import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
 import { getArticlesByGame, getHomeData } from "@/services/articleService";
 import { CATEGORY_BAR_GAMES } from "@/data/games";
 import { getGameFromSlug } from "@/utils/slug";
-import { CategoryPill } from "@/components/ui/CategoryPill";
+import { FeedArticleCard } from "@/components/article/FeedArticleCard";
+
 import { Sidebar } from "@/components/layout/Sidebar";
-import { AdSlot } from "@/components/ui/AdSlot";
 
 export const revalidate = 60; // ISR
 
@@ -45,7 +44,7 @@ export default async function GamePage({ params }: GamePageProps) {
   return (
     <div className="w-full">
       {/* Breadcrumb */}
-      <div className="wrap pt-4 text-[12.5px] text-[var(--ink-faint)] font-sans">
+      <div className="wrap pt-2 text-[12.5px] text-[var(--ink-faint)] font-sans">
         <Link href="/" className="hover:text-[var(--brand)] transition-colors">
           Home
         </Link>
@@ -57,13 +56,8 @@ export default async function GamePage({ params }: GamePageProps) {
         <span className="text-[var(--ink-dim)]">{gameDetail.name}</span>
       </div>
 
-      {/* Top Banner Ad */}
-      <div className="wrap pt-4">
-        <AdSlot type="970x90" />
-      </div>
-
       {/* Game Landing Banner (Light ESPN Style) */}
-      <div className="py-8 border-b border-[var(--line)] ">
+      <div className="py-4 border-b border-[var(--line)] ">
         <div className="wrap flex items-end justify-between">
           <div>
             <h1 className="text-[36px] sm:text-[48px] font-heading font-extrabold text-[var(--ink)] leading-none mb-2 uppercase tracking-tight">
@@ -78,7 +72,7 @@ export default async function GamePage({ params }: GamePageProps) {
       </div>
 
       {/* Main Content Area (Split Layout) */}
-      <section className="pt-8 pb-[80px]">
+      <section className="pt-4 pb-[80px]">
         <div className="wrap grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-[30px] items-start">
 
           {/* Main Feed Column */}
@@ -99,11 +93,7 @@ export default async function GamePage({ params }: GamePageProps) {
                 />
               </div>
               <div>
-                <CategoryPill
-                  type={leadStory.category}
-                  label={leadStory.categoryLabel}
-                  className="text-[10px] px-2 py-0.5 mb-3"
-                />
+
                 <h2 className="text-[28px] sm:text-[36px] font-heading font-bold text-[var(--ink)] group-hover:text-[var(--brand)] mb-3 leading-tight">
                   {leadStory.title}
                 </h2>
@@ -127,32 +117,7 @@ export default async function GamePage({ params }: GamePageProps) {
             {/* List Feed */}
             <div className="flex flex-col">
               {feedStories.map((item, idx) => (
-                <Link
-                  key={item.id || idx}
-                  href={`/story/${item.slug}`}
-                  className="group flex flex-col sm:flex-row gap-5 py-5 border-b border-[var(--line)]"
-                >
-                  <div className="w-full sm:w-[220px] aspect-[16/9] sm:aspect-auto sm:h-[130px] overflow-hidden flex-shrink-0">
-                    <img
-                      src={item.featuredImageUrl || item.imageUrl}
-                      alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="flex flex-col justify-center">
-                    <CategoryPill
-                      type={item.category}
-                      label={item.categoryLabel}
-                      className="text-[10px] px-1.5 py-0.5 mb-2 self-start"
-                    />
-                    <h3 className="text-[18px] font-bold text-[var(--ink)] group-hover:text-[var(--brand)] transition-colors leading-snug mb-2">
-                      {item.title}
-                    </h3>
-                    <div className="text-[var(--ink-faint)] font-sans text-[12px] mt-auto">
-                      {item.publishedAt}
-                    </div>
-                  </div>
-                </Link>
+                <FeedArticleCard key={item.id || idx} article={item} />
               ))}
             </div>
           </div>

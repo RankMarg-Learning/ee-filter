@@ -3,7 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { getAllArticles, getHomeData } from "@/services/articleService";
-import { CategoryPill } from "@/components/ui/CategoryPill";
+import { FeedArticleCard } from "@/components/article/FeedArticleCard";
+
 import { Sidebar } from "@/components/layout/Sidebar";
 import { AdSlot } from "@/components/ui/AdSlot";
 
@@ -123,32 +124,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
             {/* List Feed */}
             <div className="flex flex-col">
               {displayArticles.map((item, idx) => (
-                <Link
-                  key={item.id || idx}
-                  href={`/story/${item.slug}`}
-                  className="group flex flex-col sm:flex-row gap-5 py-5 border-b border-[var(--line)]"
-                >
-                  <div className="w-full sm:w-[220px] aspect-[16/9] sm:aspect-auto sm:h-[130px] overflow-hidden flex-shrink-0">
-                    <img
-                      src={item.featuredImageUrl || item.imageUrl}
-                      alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="flex flex-col justify-center">
-                    <CategoryPill
-                      type={item.category}
-                      label={item.categoryLabel}
-                      className="text-[10px] px-1.5 py-0.5 mb-2 self-start"
-                    />
-                    <h3 className="text-[18px] font-bold text-[var(--ink)] group-hover:text-[var(--brand)] transition-colors leading-snug mb-2">
-                      {item.title}
-                    </h3>
-                    <div className="text-[var(--ink-faint)] font-sans text-[12px] mt-auto">
-                      {item.gameName || item.game} • {item.publishedAt}
-                    </div>
-                  </div>
-                </Link>
+                <FeedArticleCard key={item.id || idx} article={item} showGameName={true} />
               ))}
             </div>
           </div>

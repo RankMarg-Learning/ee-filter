@@ -52,7 +52,7 @@ export default async function HomePage() {
       </div>
 
       {/* Sponsored Content Grid (Section 52) */}
-      <SponsoredSection sponsors={data.sponsors} />
+      {/* <SponsoredSection sponsors={data.sponsors} /> */}
 
       {/* Analysis & Patch Notes Section (Section 52 Blueprint) */}
       <CategorySection

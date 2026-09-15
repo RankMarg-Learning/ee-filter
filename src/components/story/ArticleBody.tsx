@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Article } from "@/types/article";
 import { AdSlot } from "@/components/ui/AdSlot";
 import MarkdownRenderer from "@/components/markdown/MarkdownRenderer";
@@ -13,20 +14,16 @@ export function ArticleBody({ article }: ArticleBodyProps) {
   const displayDek = article.excerpt || article.dek;
 
   return (
-    <div className="article-body-wrapper max-w-[680px]">
+    <div className="article-body-wrapper ">
       {/* Featured Media (mt-6 / 24px, mb-8 / 32px, radius 8px) */}
       {displayImage && (
-        <div className="mt-6 mb-8">
-          <img
+        <div className="mt-6 mb-8 relative w-full aspect-[16/9] rounded-[8px] border border-[var(--line)] overflow-hidden">
+          <Image
             src={displayImage}
             alt={article.imageAlt || article.title}
-            className="w-full h-[230px] sm:h-[420px] object-cover rounded-[8px] border border-[var(--line)]"
+            fill
+            className="object-cover"
           />
-          {article.caption && (
-            <p className="text-xs text-[var(--ink-faint)] py-2 border-b border-[var(--line)] font-sans">
-              {article.caption}
-            </p>
-          )}
         </div>
       )}
 

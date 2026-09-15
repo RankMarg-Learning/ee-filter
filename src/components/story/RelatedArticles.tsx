@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Article } from "@/types/article";
-import { CategoryPill } from "@/components/ui/CategoryPill";
+
 
 interface RelatedArticlesProps {
   gameRelated: Article[];
@@ -46,11 +46,6 @@ export function RelatedArticles({
               />
             </div>
             <div>
-              <CategoryPill
-                type={item.category}
-                label={item.categoryLabel}
-                className="text-[10px] px-1.5 py-0.5 mb-2"
-              />
               <h3 className="text-[14.5px] font-semibold font-sans leading-snug mb-1.5 text-[var(--ink)] group-hover:text-[var(--brand)] transition-colors line-clamp-2">
                 {item.title}
               </h3>

@@ -80,7 +80,7 @@ export default async function StorySlugPage({ params }: StoryPageProps) {
   return (
     <div className="w-full relative">
       {/* Breadcrumb */}
-      <div className="wrap pt-4 text-[12.5px] text-[var(--ink-faint)] font-sans">
+      <div className="wrap pt-2 text-[12.5px] text-[var(--ink-faint)] font-sans">
         <Link href="/" className="hover:text-[var(--brand)] transition-colors">
           Home
         </Link>
@@ -96,14 +96,11 @@ export default async function StorySlugPage({ params }: StoryPageProps) {
         <span className="text-[var(--ink-dim)] truncate max-w-[200px] sm:max-w-none inline-block align-bottom">{article.title}</span>
       </div>
 
-      {/* Top Banner Ad */}
-      <div className="wrap pt-4">
-        <AdSlot type="970x90" />
-      </div>
+
 
       {/* Main Article Shell */}
-      <div className="wrap py-5 pb-[80px]">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-[40px] items-start">
+      <div className="wrap py-4 pb-[80px]">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-[30px] items-start">
           {/* Main Article Content */}
           <article className="min-w-0">
             <ArticleHeader article={article} />

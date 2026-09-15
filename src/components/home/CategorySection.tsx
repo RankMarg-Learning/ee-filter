@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Article } from "@/types/article";
-import { CategoryPill } from "@/components/ui/CategoryPill";
+
 
 interface CategorySectionProps {
   title: string;
@@ -47,11 +47,7 @@ export function CategorySection({
                 />
               </div>
               <div>
-                <CategoryPill
-                  type={story.category}
-                  label={story.categoryLabel}
-                  className="mb-1.5"
-                />
+
                 {/* 16px Card Title per Section 11 */}
                 <h3 className="text-base font-semibold leading-snug mb-1.5 text-[var(--ink)] group-hover:text-[var(--brand)] transition-colors line-clamp-2">
                   {story.title}

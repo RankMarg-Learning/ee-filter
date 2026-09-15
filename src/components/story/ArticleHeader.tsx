@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Article } from "@/types/article";
-import { CategoryPill } from "@/components/ui/CategoryPill";
+
 import { GAME_DETAILS } from "@/data/games";
 
 interface ArticleHeaderProps {
@@ -19,7 +19,7 @@ export function ArticleHeader({ article }: ArticleHeaderProps) {
     <div className="article-header max-w-[680px] pb-6 border-b border-[var(--line)] mb-6">
       {/* Category Pill and Game Tag (12px space to title) */}
       <div className="flex items-center gap-3 mb-3">
-        <CategoryPill type={article.category} label={article.categoryLabel} />
+
         <span className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--ink-dim)] font-sans">
           <span
             className="w-1.5 h-1.5 rounded-full inline-block"
