@@ -7,6 +7,11 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CookieConsent } from "@/components/ui/CookieConsent";
 
+import fallbackNav from "@/data/ef_header.json";
+
+// Fallback data in case the fetch fails
+const FALLBACK_NAV = fallbackNav;
+
 const oswald = Oswald({
   variable: "--font-oswald",
   subsets: ["latin"],
@@ -32,11 +37,23 @@ export const metadata: Metadata = {
 
 const GA_MEASUREMENT_ID = "G-C1THGLMGBF";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  let headerData: any = FALLBACK_NAV;
+  try {
+    const res = await fetch("https://cdn.valoinfo.com/config/ef_header2.json", {
+      next: { tags: ["header-config"] }, // Revalidate on-demand via API
+    });
+    if (res.ok) {
+      headerData = await res.json();
+    }
+  } catch (error) {
+    console.error("Failed to fetch header config:", error);
+  }
+
   return (
     <html
       lang="en"
@@ -61,7 +78,10 @@ export default function RootLayout({
 
         <ThemeProvider>
           <div className="fixed inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none opacity-50 dark:opacity-100" />
-          <Header />
+          <Header
+            mainNavItems={headerData.mainNavItems}
+            categoryNavItems={headerData.categoryNavItems}
+          />
           <main className="relative z-10 w-full flex-1">
             <div className="w-full max-w-[1920px] mx-auto flex justify-center items-start md:px-4 px-2 md:pt-4 pt-2 pb-8 gap-5 xl:gap-6">
               <div id="global-ad-left" className="hidden xl:block w-[160px] min-[1840px]:w-[300px] shrink-0 sticky top-4">

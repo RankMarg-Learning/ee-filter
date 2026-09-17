@@ -1,0 +1,128 @@
+{
+    "mainNavItems": [
+        {
+            "type": "link",
+            "label": "Home",
+            "href": "/"
+        },
+        {
+            "type": "link",
+            "label": "Breaking News",
+            "href": "/category/breaking-news"
+        },
+        {
+            "type": "dropdown",
+            "layout": "stacked",
+            "label": "Tournaments",
+            "groups": [
+                {
+                    "title": "All Tournaments",
+                    "links": [
+                        {
+                            "label": "VCT 2024: Masters Madrid",
+                            "href": "/tournaments/vct-masters-madrid",
+                            "badge": "Ongoing"
+                        },
+                        {
+                            "label": "PGL Major Copenhagen",
+                            "href": "/tournaments/pgl-major-copenhagen",
+                            "badge": "Ongoing"
+                        },
+                        {
+                            "label": "Esports World Cup 2024",
+                            "href": "/tournaments/ewc-2024",
+                            "date": "Jul 3, 2024",
+                            "badge": "Upcoming"
+                        },
+                        {
+                            "label": "IEM Katowice 2024",
+                            "href": "/tournaments/iem-katowice-2024",
+                            "badge": "Resulted"
+                        }
+                    ],
+                    "viewAll": {
+                        "label": "View All Tournaments",
+                        "href": "/tournaments"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "dropdown",
+            "label": "Standings",
+            "groups": [
+                {
+                    "title": "Valorant",
+                    "links": [
+                        {
+                            "label": "VCT Americas",
+                            "href": "/standings/vct-americas"
+                        },
+                        {
+                            "label": "VCT EMEA",
+                            "href": "/standings/vct-emea"
+                        },
+                        {
+                            "label": "VCT Pacific",
+                            "href": "/standings/vct-pacific"
+                        }
+                    ],
+                    "viewAll": {
+                        "label": "View All Valorant",
+                        "href": "/standings/valorant"
+                    }
+                },
+                {
+                    "title": "CS2",
+                    "links": [
+                        {
+                            "label": "ESL World Ranking",
+                            "href": "/standings/esl-ranking"
+                        }
+                    ],
+                    "viewAll": {
+                        "label": "View All CS2",
+                        "href": "/standings/cs2"
+                    }
+                }
+            ]
+        }
+    ],
+    "categoryNavItems": [
+        {
+            "name": "All Games",
+            "slug": "all",
+            "key": "ALL"
+        },
+        {
+            "name": "Valorant",
+            "slug": "valorant",
+            "key": "V"
+        },
+        {
+            "name": "Counter-Strike 2",
+            "slug": "cs2",
+            "key": "CS2"
+        },
+        {
+            "name": "Dota 2",
+            "slug": "dota2",
+            "key": "DOTA2"
+        },
+        {
+            "name": "League of Legends",
+            "slug": "league-of-legends",
+            "key": "LOL"
+        },
+        {
+            "name": "MLBB",
+            "slug": "mlbb",
+            "key": "MLBB"
+        },
+        {
+            "name": "PUBG",
+            "slug": "pubg",
+            "key": "PUBG"
+        }
+    ]
+}
