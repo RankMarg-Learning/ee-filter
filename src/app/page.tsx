@@ -20,7 +20,7 @@ export default async function HomePage() {
       <HeroSection
         leadStory={data.leadStory}
         headlines={data.headlines}
-        subStories={data.breakingNews.slice(0, 2)}
+        subStories={data.featuredArticles?.length > 1 ? data.featuredArticles.slice(1, 3) : data.breakingNews.slice(0, 2)}
       />
 
       {/* Dedicated Advertisement Block (Section 24) */}

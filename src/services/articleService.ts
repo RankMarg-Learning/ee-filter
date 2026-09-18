@@ -9,6 +9,7 @@ export async function getHomeData(): Promise<{
   breakingNews: Article[];
   analysisNews: Article[];
   feedStories: Article[];
+  featuredArticles: Article[];
 }> {
   try {
     const res = await fetch(`${API_BASE_URL}/articles/ef/home`, { next: { tags: ['articles'] } });
@@ -33,6 +34,7 @@ export async function getHomeData(): Promise<{
       breakingNews: [],
       analysisNews: [],
       feedStories: [],
+      featuredArticles: [],
     };
   }
 }
