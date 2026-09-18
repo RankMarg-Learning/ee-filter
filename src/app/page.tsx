@@ -1,12 +1,10 @@
 import React from "react";
 import { getHomeData } from "@/services/articleService";
 import { HeroSection } from "@/components/home/HeroSection";
-import { SponsoredSection } from "@/components/home/SponsoredSection";
 import { CategorySection } from "@/components/home/CategorySection";
 import { MainFeedSection } from "@/components/home/MainFeedSection";
 import { AdSlot } from "@/components/ui/AdSlot";
-
-export const revalidate = 60; // ISR revalidation interval in seconds
+import { GAMES } from "@/data/games";
 
 export default async function HomePage() {
   const data = await getHomeData();
@@ -26,25 +24,18 @@ export default async function HomePage() {
       />
 
       {/* Dedicated Advertisement Block (Section 24) */}
-      <div className="wrap py-4">
+      <div className="wrap py-2">
         <AdSlot type="728x90" />
       </div>
 
       {/* Latest News Section (Chronological, Section 17) */}
       <CategorySection
         title="Latest News"
-        viewAllHref="/category/news"
+        viewAllHref="/category/breaking-news"
         articles={data.breakingNews}
         maxItems={8}
       />
 
-      {/* VALORANT Esports Focus Section (Section 52 Blueprint) */}
-      <CategorySection
-        title="VALORANT Esports"
-        viewAllHref="/game/valorant"
-        articles={data.breakingNews.filter((a) => a.game === "V" || a.gameName === "Valorant")}
-        maxItems={4}
-      />
 
       {/* Dedicated Advertisement Block (Section 24 & 52) */}
       <div className="wrap py-4">
@@ -56,8 +47,8 @@ export default async function HomePage() {
 
       {/* Analysis & Patch Notes Section (Section 52 Blueprint) */}
       <CategorySection
-        title="Analysis & Patch Notes"
-        viewAllHref="/category/analysis"
+        title="Guide"
+        viewAllHref="/category/guide"
         articles={data.analysisNews}
         bgAlt={true}
         maxItems={4}

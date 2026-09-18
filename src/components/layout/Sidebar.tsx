@@ -55,7 +55,7 @@ export function Sidebar({ trendingArticles = [], gameTitle = "Esports" }: Sideba
       <div className="border border-[var(--line)] bg-[var(--card-bg)] p-4">
         <div className="text-[12px] font-heading uppercase tracking-wider text-[var(--ink-dim)] font-bold mb-3 flex items-center gap-2">
           <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand)] inline-block" />
-          Explore Game Hubs
+          Explore Game
         </div>
         <div className="flex flex-wrap gap-2">
           {quickGames.map((game) => (
@@ -73,7 +73,7 @@ export function Sidebar({ trendingArticles = [], gameTitle = "Esports" }: Sideba
 
 
       {/* Social & Community Channels */}
-      <div className="border border-[var(--line)] bg-[var(--card-bg)] p-4">
+      <div className="border border-[var(--line)] bg-[var(--card-bg)] p-4 hidden">
         <div className="text-[12px] font-heading uppercase tracking-wider text-[var(--ink-dim)] font-bold mb-3">
           Join EsportFilter Community
         </div>

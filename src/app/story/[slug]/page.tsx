@@ -2,6 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
+import { getGameFromSlug } from "@/utils/slug";
+import { enumToText } from "@/utils/textConvertor";
 import {
   getArticleBySlug,
   getAllArticleSlugs,
@@ -17,7 +19,7 @@ import { FloatingNextStory } from "@/components/story/FloatingNextStory";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { AdSlot } from "@/components/ui/AdSlot";
 
-export const revalidate = 60; // ISR revalidation interval in seconds
+
 
 interface StoryPageProps {
   params: Promise<{ slug: string }>;
@@ -63,12 +65,19 @@ export default async function StorySlugPage({ params }: StoryPageProps) {
 
   const { headlines } = await getHomeData();
   const allArticles = await getAllArticles();
-  const gameKey = article.gameKey || article.game;
-  const gameName = article.gameName || article.game;
+
+  const gameDetail = getGameFromSlug(article.game);
+  const displayGameName = gameDetail.name;
+  const gameHref = `/game/${gameDetail.slug}`;
+
+  // Format category from enum format (e.g. BREAKING_NEWS -> Breaking News)
+  const rawCat = article.category || "News";
+  const displayCategoryName = article.categoryLabel || enumToText(rawCat);
+  const categoryHref = `/category/${rawCat.toLowerCase().replace(/_/g, '-')}`;
 
   const { gameRelated, sameCategory } = await getRelatedArticles(
-    gameKey,
-    article.category
+    gameDetail.key,
+    rawCat
   );
 
   const authorRelated = allArticles.filter(
@@ -85,12 +94,12 @@ export default async function StorySlugPage({ params }: StoryPageProps) {
           Home
         </Link>
         <span className="mx-1.5">/</span>
-        <Link href={`/game/${gameName.toLowerCase()}`} className="hover:text-[var(--brand)] transition-colors">
-          {gameName}
+        <Link href={gameHref} className="hover:text-[var(--brand)] transition-colors">
+          {displayGameName}
         </Link>
         <span className="mx-1.5">/</span>
-        <Link href={`/category/${article.category.toLowerCase()}`} className="hover:text-[var(--brand)] transition-colors">
-          {article.categoryLabel || article.category}
+        <Link href={categoryHref} className="hover:text-[var(--brand)] transition-colors">
+          {displayCategoryName}
         </Link>
         <span className="mx-1.5">/</span>
         <span className="text-[var(--ink-dim)] truncate max-w-[200px] sm:max-w-none inline-block align-bottom">{article.title}</span>
@@ -105,11 +114,10 @@ export default async function StorySlugPage({ params }: StoryPageProps) {
           <article className="min-w-0">
             <ArticleHeader article={article} />
             <ArticleBody article={article} />
-            <AuthorBox author={article.author} />
             <RelatedArticles
               gameRelated={gameRelated}
               sameCategory={sameCategory}
-              gameName={gameName}
+              gameName={displayGameName}
               authorRelated={authorRelated}
               authorName={article.author?.name}
               authorSlug={article.author?.name?.toLowerCase().replace(/\s+/g, "-")}
@@ -117,7 +125,7 @@ export default async function StorySlugPage({ params }: StoryPageProps) {
           </article>
 
           {/* Right Static Sidebar */}
-          <Sidebar trendingArticles={headlines} gameTitle={gameName} />
+          <Sidebar trendingArticles={headlines} gameTitle={displayGameName} />
         </div>
       </div>
 

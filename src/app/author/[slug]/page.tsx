@@ -8,7 +8,7 @@ import { FeedArticleCard } from "@/components/article/FeedArticleCard";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { AdSlot } from "@/components/ui/AdSlot";
 
-export const revalidate = 60; // ISR
+
 
 interface AuthorPageProps {
   params: Promise<{ slug: string }>;

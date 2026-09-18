@@ -1,87 +1,111 @@
-import {
-  MOCK_LEAD_STORY,
-  MOCK_HEADLINES,
-  MOCK_SPONSOR_CARDS,
-  MOCK_BREAKING_NEWS,
-  MOCK_ANALYSIS_NEWS,
-  MOCK_FEED_STORIES,
-  MOCK_RELATED_VALORANT,
-  MOCK_SAME_CATEGORY_STRIP,
-} from "@/data/mockData";
-import { Article } from "@/types/article";
-import { GAME_DETAILS } from "@/data/games";
+import { Article, Headline } from "@/types/article";
 
-export async function getHomeData() {
-  return {
-    leadStory: MOCK_LEAD_STORY,
-    headlines: MOCK_HEADLINES,
-    sponsors: MOCK_SPONSOR_CARDS,
-    breakingNews: MOCK_BREAKING_NEWS,
-    analysisNews: MOCK_ANALYSIS_NEWS,
-    feedStories: MOCK_FEED_STORIES,
-  };
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api/v1";
+
+export async function getHomeData(): Promise<{
+  leadStory: Article;
+  headlines: Headline[];
+  sponsors: any[];
+  breakingNews: Article[];
+  analysisNews: Article[];
+  feedStories: Article[];
+}> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/articles/ef/home`, { next: { tags: ['articles'] } });
+    if (!res.ok) throw new Error("Failed to fetch home data");
+    const json = await res.json();
+    
+    const data = json.data;
+    data.headlines = data.headlines?.map((h: any, i: number) => ({
+      ...h,
+      number: i + 1,
+      gameName: h.game || 'Esports',
+      timeAgo: 'Recently'
+    })) || [];
+
+    return data;
+  } catch (error) {
+    console.error(error);
+    return {
+      leadStory: {} as Article,
+      headlines: [],
+      sponsors: [],
+      breakingNews: [],
+      analysisNews: [],
+      feedStories: [],
+    };
+  }
 }
 
 export async function getAllArticles(): Promise<Article[]> {
-  return [
-    MOCK_LEAD_STORY,
-    ...MOCK_BREAKING_NEWS,
-    ...MOCK_ANALYSIS_NEWS,
-    ...MOCK_FEED_STORIES,
-    ...MOCK_RELATED_VALORANT,
-    ...MOCK_SAME_CATEGORY_STRIP,
-  ];
+  try {
+    const res = await fetch(`${API_BASE_URL}/articles?limit=50&isPublished=true&excludeGame=V`, { next: { tags: ['articles'] } });
+    if (!res.ok) throw new Error("Failed to fetch all articles");
+    const json = await res.json();
+    return json.data.records;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 }
 
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
-  const all = await getAllArticles();
-  const found = all.find((item) => item.slug === slug);
-  if (found) return found;
-
-  return {
-    ...MOCK_LEAD_STORY,
-    slug: slug,
-    title: slug
-      .split("-")
-      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-      .join(" "),
-  };
+  try {
+    const res = await fetch(`${API_BASE_URL}/articles/slug/${slug}`, { next: { tags: ['articles'] } });
+    if (!res.ok) return null;
+    const json = await res.json();
+    return json.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 }
 
 export async function getAllArticleSlugs(): Promise<string[]> {
-  const all = await getAllArticles();
-  return Array.from(new Set(all.map((a) => a.slug)));
+  const articles = await getAllArticles();
+  return articles.map((a) => a.slug);
 }
 
 export async function getArticlesByGame(gameSlugOrKey: string): Promise<Article[]> {
-  const all = await getAllArticles();
-  const normalized = gameSlugOrKey.toLowerCase();
-
-  return all.filter((a) => {
-    const gameDetail = GAME_DETAILS[a.game];
-    return (
-      a.game.toLowerCase() === normalized ||
-      (gameDetail && gameDetail.slug.toLowerCase() === normalized) ||
-      (normalized === "valorant" && a.game === "V")
-    );
-  });
+  try {
+    const res = await fetch(`${API_BASE_URL}/articles/ef/game/${gameSlugOrKey}`, { next: { tags: ['articles'] } });
+    if (!res.ok) throw new Error("Failed to fetch game data");
+    const json = await res.json();
+    return json.data.articles || [];
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 }
 
 export async function getArticlesByCategory(categorySlug: string): Promise<Article[]> {
-  const all = await getAllArticles();
-  const normalized = categorySlug.toLowerCase();
-
-  return all.filter((a) => {
-    return (
-      a.category.toLowerCase() === normalized ||
-      (a.categoryLabel && a.categoryLabel.toLowerCase() === normalized)
-    );
-  });
+  try {
+    const res = await fetch(`${API_BASE_URL}/articles/ef/category/${categorySlug}`, { next: { tags: ['articles'] } });
+    if (!res.ok) throw new Error("Failed to fetch category data");
+    const json = await res.json();
+    return json.data.articles || [];
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 }
 
 export async function getRelatedArticles(gameKey: string, category: string) {
-  return {
-    gameRelated: MOCK_RELATED_VALORANT,
-    sameCategory: MOCK_SAME_CATEGORY_STRIP,
-  };
+  try {
+    // Basic implementation for now, using the same category data
+    const res = await fetch(`${API_BASE_URL}/articles/ef/category/${category}`, { next: { tags: ['articles'] } });
+    if (!res.ok) throw new Error("Failed to fetch related data");
+    const json = await res.json();
+    return {
+      gameRelated: json.data.articles || [],
+      sameCategory: json.data.articles || [],
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      gameRelated: [],
+      sameCategory: [],
+    };
+  }
 }
+

@@ -47,8 +47,8 @@ export function Header({ mainNavItems = [], categoryNavItems = [] }: HeaderProps
     <header className="border-b border-[var(--line)] sticky top-0 z-50 bg-[var(--header-bg)] backdrop-blur-md transition-colors">
       {/* Top Main Navigation Row (64px desktop, 56px mobile per Section 5) */}
       <div className="wrap flex items-center h-[56px] md:h-[64px] justify-between gap-6">
-        <Link href="/" className="font-heading font-bold text-xl md:text-2xl text-[var(--ink)] flex-shrink-0 tracking-tight">
-          Esport<span className="text-[var(--brand)]">Filter</span>
+        <Link href="/" className="flex items-center flex-shrink-0">
+          <img src="/logo.svg" alt="EsportFilter" className="h-8 md:h-10 w-auto" />
         </Link>
 
         {/* Desktop Main Navigation (Section 5 & 11: text-sm font-medium) */}

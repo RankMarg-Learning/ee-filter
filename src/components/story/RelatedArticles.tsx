@@ -1,6 +1,7 @@
-import React from "react";
 import Link from "next/link";
 import { Article } from "@/types/article";
+import { timeConvertor } from "@/utils/timeConvertor";
+import { GAME_DETAILS } from "@/data/games";
 
 
 interface RelatedArticlesProps {
@@ -14,7 +15,6 @@ interface RelatedArticlesProps {
 
 export function RelatedArticles({
   gameRelated,
-  sameCategory,
   gameName,
   authorRelated = [],
   authorName,
@@ -50,7 +50,7 @@ export function RelatedArticles({
                 {item.title}
               </h3>
               <span className="text-[11.5px] text-[var(--ink-faint)] block font-sans">
-                {item.gameName || item.game} · {item.publishedAt}
+                {GAME_DETAILS[item.game || ""]?.name || item.gameName || item.game} · <span suppressHydrationWarning>{timeConvertor(item.publishedAt)}</span>
               </span>
             </div>
           </Link>
@@ -86,8 +86,8 @@ export function RelatedArticles({
                 <h4 className="text-[13.5px] font-semibold font-sans leading-snug text-[var(--ink)] group-hover:text-[var(--brand)] transition-colors line-clamp-2">
                   {item.title}
                 </h4>
-                <span className="text-[11px] text-[var(--ink-faint)] mt-1 block">
-                  {item.publishedAt}
+                <span className="text-[11.5px] text-[var(--ink-faint)] block font-sans" suppressHydrationWarning>
+                  {timeConvertor(item.publishedAt)}
                 </span>
               </Link>
             ))}

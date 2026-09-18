@@ -3,11 +3,12 @@ import { Metadata } from "next";
 import { getArticlesByGame, getHomeData } from "@/services/articleService";
 import { CATEGORY_BAR_GAMES } from "@/data/games";
 import { getGameFromSlug } from "@/utils/slug";
+import { formatLocalTime } from "@/utils/timeConvertor";
 import { FeedArticleCard } from "@/components/article/FeedArticleCard";
 
 import { Sidebar } from "@/components/layout/Sidebar";
 
-export const revalidate = 60; // ISR
+
 
 interface GamePageProps {
   params: Promise<{ game: string }>;
@@ -38,8 +39,8 @@ export default async function GamePage({ params }: GamePageProps) {
   const articles = await getArticlesByGame(gameSlug);
   const { headlines } = await getHomeData();
 
-  const leadStory = articles[0] || (await getHomeData()).leadStory;
-  const feedStories = articles.length > 1 ? articles.slice(1) : (await getHomeData()).feedStories;
+  const leadStory = articles[0] || null;
+  const feedStories = articles.length > 1 ? articles.slice(1) : [];
 
   return (
     <div className="w-full">
@@ -84,42 +85,52 @@ export default async function GamePage({ params }: GamePageProps) {
             </div>
 
             {/* Featured Lead Story */}
-            <Link href={`/story/${leadStory.slug}`} className="group flex flex-col mb-10">
-              <div className="w-full relative overflow-hidden mb-4">
-                <img
-                  src={leadStory.featuredImageUrl || leadStory.imageUrl}
-                  alt={leadStory.title}
-                  className="w-full h-[320px] sm:h-[400px] object-cover group-hover:scale-[1.02] transition-transform duration-500"
-                />
-              </div>
-              <div>
-
-                <h2 className="text-[28px] sm:text-[36px] font-heading font-bold text-[var(--ink)] group-hover:text-[var(--brand)] mb-3 leading-tight">
-                  {leadStory.title}
-                </h2>
-                {(leadStory.excerpt || leadStory.dek) && (
-                  <p className="text-[16px] text-[var(--ink-dim)] mb-4 font-sans leading-relaxed">
-                    {leadStory.excerpt || leadStory.dek}
-                  </p>
-                )}
-                <div className="text-[var(--ink-faint)] font-sans text-[12.5px]">
-                  <strong className="text-[var(--ink-dim)]">{leadStory.author?.name || "EsportFilter Staff"}</strong> • {leadStory.publishedAt}
+            {leadStory ? (
+              <Link href={`/story/${leadStory.slug}`} className="group flex flex-col mb-10">
+                <div className="w-full relative overflow-hidden mb-4">
+                  <img
+                    src={leadStory.featuredImageUrl || leadStory.imageUrl}
+                    alt={leadStory.title}
+                    className="w-full h-[320px] sm:h-[400px] object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                  />
                 </div>
+                <div>
+
+                  <h2 className="text-[28px] sm:text-[36px] font-heading font-bold text-[var(--ink)] group-hover:text-[var(--brand)] mb-3 leading-tight">
+                    {leadStory.title}
+                  </h2>
+                  {(leadStory.excerpt || leadStory.dek) && (
+                    <p className="text-[16px] text-[var(--ink-dim)] mb-4 font-sans leading-relaxed">
+                      {leadStory.excerpt || leadStory.dek}
+                    </p>
+                  )}
+                  <div className="text-[var(--ink-faint)] font-sans text-[12.5px]">
+                    <strong className="text-[var(--ink-dim)]">{leadStory.author?.name || "EsportFilter Staff"}</strong> • <span suppressHydrationWarning>{leadStory.publishedAt ? formatLocalTime(leadStory.publishedAt) : "Recently"}</span>
+                  </div>
+                </div>
+              </Link>
+            ) : (
+              <div className="mb-10 text-[var(--ink-dim)] italic">
+                No top story available for {gameDetail.name} yet.
               </div>
-            </Link>
+            )}
 
-            <div className="mb-6 border-b-2 border-[var(--ink)] pb-2 mt-4">
-              <h2 className="text-[18px] font-heading font-bold text-[var(--ink)] uppercase tracking-wide">
-                More Headlines
-              </h2>
-            </div>
+            {feedStories.length > 0 && (
+              <>
+                <div className="mb-6 border-b-2 border-[var(--ink)] pb-2 mt-4">
+                  <h2 className="text-[18px] font-heading font-bold text-[var(--ink)] uppercase tracking-wide">
+                    More Headlines
+                  </h2>
+                </div>
 
-            {/* List Feed */}
-            <div className="flex flex-col">
-              {feedStories.map((item, idx) => (
-                <FeedArticleCard key={item.id || idx} article={item} />
-              ))}
-            </div>
+                {/* List Feed */}
+                <div className="flex flex-col">
+                  {feedStories.map((item, idx) => (
+                    <FeedArticleCard key={item.id || idx} article={item} />
+                  ))}
+                </div>
+              </>
+            )}
           </div>
 
           {/* Right Sticky Sidebar */}

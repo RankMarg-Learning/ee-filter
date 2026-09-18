@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Article, Headline } from "@/types/article";
+import { timeConvertor } from "@/utils/timeConvertor";
 
 
 interface HeroSectionProps {
@@ -20,10 +21,10 @@ export function HeroSection({
   const secondaryCards = subStories.slice(0, 2);
 
   return (
-    <section className="py-8 border-b border-[var(--line)] font-sans">
-      <div className="wrap flex flex-col gap-8">
+    <section className="py-4 border-b border-[var(--line)] font-sans">
+      <div className="wrap flex flex-col gap-6">
         {/* Top Tier: Main Story (60-65% width) + Secondary Stories (35-40% width) per Section 7 */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
           {/* Main Story (7 Cols / 60%) */}
           <div className="lg:col-span-7 flex flex-col">
             <Link href={`/story/${leadStory.slug}`} className="group block">
@@ -54,7 +55,7 @@ export function HeroSection({
                 {/* Metadata (12px per Section 9) */}
                 <span className="text-xs text-[var(--ink-faint)] font-normal block">
                   <span className="text-[var(--brand)] font-semibold">{displayGame}</span> · By{" "}
-                  {leadStory.author?.name || "VALOINFO Staff"} · {leadStory.updatedAt || leadStory.publishedAt}
+                  {leadStory.author?.name || "VALOINFO Staff"} · <span suppressHydrationWarning>{timeConvertor(leadStory.publishedAt)}</span>
                 </span>
               </div>
             </Link>
@@ -89,7 +90,7 @@ export function HeroSection({
                     {story.title}
                   </h3>
                   <span className="text-xs text-[var(--ink-faint)] font-normal block">
-                    {story.gameName || story.game} · {story.publishedAt}
+                    {story.gameName || story.game} · <span suppressHydrationWarning>{timeConvertor(story.publishedAt)}</span>
                   </span>
                 </div>
               </Link>

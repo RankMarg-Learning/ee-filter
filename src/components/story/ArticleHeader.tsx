@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Article } from "@/types/article";
-
+import { formatLocalTime } from "@/utils/timeConvertor";
 import { GAME_DETAILS } from "@/data/games";
 
 interface ArticleHeaderProps {
@@ -16,8 +16,7 @@ export function ArticleHeader({ article }: ArticleHeaderProps) {
   const authorSlug = article.author.name.toLowerCase().replace(/\s+/g, "-");
 
   return (
-    <div className="article-header max-w-[680px] pb-6 border-b border-[var(--line)] mb-6">
-      {/* Category Pill and Game Tag (12px space to title) */}
+    <div className="article-header  pb-6 border-b border-[var(--line)] mb-6">
       <div className="flex items-center gap-3 mb-3">
 
         <span className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--ink-dim)] font-sans">
@@ -29,12 +28,10 @@ export function ArticleHeader({ article }: ArticleHeaderProps) {
         </span>
       </div>
 
-      {/* Article H1 Title (32px / 1.15, 12px space to description) */}
       <h1 className="text-2xl md:text-3xl font-bold tracking-tight leading-tight text-[var(--ink)] mb-3 font-sans">
         {article.title}
       </h1>
 
-      {/* Article Description / Dek (16px / 1.5, 16px space to metadata) */}
       {displayDek && (
         <p className="text-base leading-relaxed text-[var(--ink-dim)] font-normal mb-4 font-sans">
           {displayDek}
@@ -57,10 +54,11 @@ export function ArticleHeader({ article }: ArticleHeaderProps) {
                 {article.author.name}
               </Link>
             </span>
-            <span>
-              Published {article.publishedAt}
-              {article.updatedAt && ` · Updated ${article.updatedAt}`}
-            </span>
+            {article.publishedAt && (
+              <span>
+                Published <span suppressHydrationWarning>{formatLocalTime(article.publishedAt)}</span>
+              </span>
+            )}
           </div>
         </div>
 

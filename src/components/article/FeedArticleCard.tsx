@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Article } from "@/types/article";
+import { timeConvertor } from "@/utils/timeConvertor";
 
 interface FeedArticleCardProps {
   article: Article;
@@ -33,7 +34,7 @@ export function FeedArticleCard({ article, showGameName = false }: FeedArticleCa
           {showGameName && (article.gameName || article.game)
             ? `${article.gameName || article.game} • `
             : ""}
-          {article.publishedAt}
+          <span suppressHydrationWarning>{timeConvertor(article.publishedAt)}</span>
         </div>
       </div>
     </Link>

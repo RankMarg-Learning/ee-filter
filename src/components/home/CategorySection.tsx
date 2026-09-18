@@ -21,7 +21,7 @@ export function CategorySection({
   const displayArticles = articles.slice(0, maxItems);
 
   return (
-    <section className={`py-8 border-b border-[var(--line)] font-sans ${bgAlt ? "bg-[var(--bg-alt)]" : ""}`}>
+    <section className={`py-3 border-b border-[var(--line)] font-sans ${bgAlt ? "bg-[var(--bg-alt)]" : ""}`}>
       <div className="wrap">
         <div className="flex justify-between items-center mb-5">
           <h2 className="text-xl font-bold tracking-tight flex items-center gap-2.5 text-[var(--ink)]">
