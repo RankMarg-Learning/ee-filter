@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Article } from "@/types/article";
 import { formatLocalTime } from "@/utils/timeConvertor";
 import { GAME_DETAILS } from "@/data/games";
+import { ArticleShareButtons } from "./ArticleShareButtons";
 
 interface ArticleHeaderProps {
   article: Article;
@@ -64,33 +65,7 @@ export function ArticleHeader({ article }: ArticleHeaderProps) {
 
 
         {/* Social Share Buttons */}
-        <div className="flex gap-2">
-          <button
-            aria-label="Share on X"
-            className="icon-btn border border-[var(--line)] w-8 h-8 flex items-center justify-center cursor-pointer bg-transparent text-[var(--ink-dim)] hover:text-[var(--brand)] transition-colors"
-          >
-            <svg className="w-3.5 h-3.5 stroke-current fill-none" viewBox="0 0 24 24" strokeWidth="2">
-              <path d="M4 4l16 16M20 4L4 20" />
-            </svg>
-          </button>
-          <button
-            aria-label="Copy link"
-            className="icon-btn border border-[var(--line)] w-8 h-8 flex items-center justify-center cursor-pointer bg-transparent text-[var(--ink-dim)] hover:text-[var(--brand)] transition-colors"
-          >
-            <svg className="w-3.5 h-3.5 stroke-current fill-none" viewBox="0 0 24 24" strokeWidth="2">
-              <path d="M10 13a5 5 0 007 0l3-3a5 5 0 00-7-7l-1 1" />
-              <path d="M14 11a5 5 0 00-7 0l-3 3a5 5 0 007 7l1-1" />
-            </svg>
-          </button>
-          <button
-            aria-label="Bookmark"
-            className="icon-btn border border-[var(--line)] w-8 h-8 flex items-center justify-center cursor-pointer bg-transparent text-[var(--ink-dim)] hover:text-[var(--brand)] transition-colors"
-          >
-            <svg className="w-3.5 h-3.5 stroke-current fill-none" viewBox="0 0 24 24" strokeWidth="2">
-              <path d="M6 4h12v16l-6-4-6 4V4z" />
-            </svg>
-          </button>
-        </div>
+        <ArticleShareButtons title={article.title} />
       </div>
     </div>
   );
