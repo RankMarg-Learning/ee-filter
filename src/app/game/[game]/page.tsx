@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import { getArticlesByGame, getHomeData } from "@/services/articleService";
-import { CATEGORY_BAR_GAMES } from "@/data/games";
-import { getGameFromSlug } from "@/utils/slug";
-import { formatLocalTime } from "@/utils/timeConvertor";
+import { CATEGORY_BAR_GAMES, GAME_DETAILS } from "@/data/games";
+import { slugToText } from "@/utils/textConvertor";
+import { timeConvertor } from "@/utils/timeConvertor";
 import { FeedArticleCard } from "@/components/article/FeedArticleCard";
 
 import { Sidebar } from "@/components/layout/Sidebar";
@@ -23,20 +23,23 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: GamePageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const gameSlug = resolvedParams?.game || "";
-  const gameDetail = getGameFromSlug(gameSlug);
+  const gameName = slugToText(gameSlug);
 
   return {
-    title: `${gameDetail.name} Esports News, Coverage & Articles — EsportFilter`,
-    description: `Latest ${gameDetail.name} news, tournament coverage, patch updates and roster moves on EsportFilter.`,
+    title: `${gameName} Esports News, Coverage & Articles — EsportFilter`,
+    description: `Latest ${gameName} news, tournament coverage, patch updates and roster moves on EsportFilter.`,
   };
 }
 
 export default async function GamePage({ params }: GamePageProps) {
   const resolvedParams = await params;
   const gameSlug = resolvedParams?.game || "";
-  const gameDetail = getGameFromSlug(gameSlug);
+  const gameName = slugToText(gameSlug);
 
-  const articles = await getArticlesByGame(gameSlug);
+  const gameEntry = Object.values(GAME_DETAILS).find(g => g.slug === gameSlug);
+  const gameKey = gameEntry ? gameEntry.key : gameSlug.toUpperCase();
+
+  const articles = await getArticlesByGame(gameKey);
   const { headlines } = await getHomeData();
 
   const leadStory = articles[0] || null;
@@ -54,7 +57,7 @@ export default async function GamePage({ params }: GamePageProps) {
           Games
         </Link>
         <span className="mx-1.5">/</span>
-        <span className="text-[var(--ink-dim)]">{gameDetail.name}</span>
+        <span className="text-[var(--ink-dim)]">{gameName}</span>
       </div>
 
       {/* Game Landing Banner (Light ESPN Style) */}
@@ -62,10 +65,10 @@ export default async function GamePage({ params }: GamePageProps) {
         <div className="wrap flex items-end justify-between">
           <div>
             <h1 className="text-[36px] sm:text-[48px] font-heading font-extrabold text-[var(--ink)] leading-none mb-2 uppercase tracking-tight">
-              {gameDetail.name}
+              {gameName}
             </h1>
             <p className="text-[15px] text-[var(--ink-dim)] font-sans max-w-xl">
-              Get the latest updates, competitive deep dives, tournament coverage, and expert analysis on everything related to {gameDetail.name}.
+              Get the latest updates, competitive deep dives, tournament coverage, and expert analysis on everything related to {gameName}.
             </p>
           </div>
 
@@ -105,13 +108,13 @@ export default async function GamePage({ params }: GamePageProps) {
                     </p>
                   )}
                   <div className="text-[var(--ink-faint)] font-sans text-[12.5px]">
-                    <strong className="text-[var(--ink-dim)]">{leadStory.author?.name || "EsportFilter Staff"}</strong> • <span suppressHydrationWarning>{leadStory.publishedAt ? formatLocalTime(leadStory.publishedAt) : "Recently"}</span>
+                    <strong className="text-[var(--ink-dim)]">{leadStory.author?.name || "EsportFilter Staff"}</strong> • <span suppressHydrationWarning>{leadStory.publishedAt ? timeConvertor(leadStory.publishedAt) : "Recently"}</span>
                   </div>
                 </div>
               </Link>
             ) : (
               <div className="mb-10 text-[var(--ink-dim)] italic">
-                No top story available for {gameDetail.name} yet.
+                No top story available for {gameName} yet.
               </div>
             )}
 
@@ -134,7 +137,7 @@ export default async function GamePage({ params }: GamePageProps) {
           </div>
 
           {/* Right Sticky Sidebar */}
-          <Sidebar trendingArticles={headlines} gameTitle={gameDetail.name} />
+          <Sidebar trendingArticles={headlines} gameTitle={gameName} />
 
         </div>
       </section>

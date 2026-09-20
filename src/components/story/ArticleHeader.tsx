@@ -44,7 +44,7 @@ export function ArticleHeader({ article }: ArticleHeaderProps) {
         <div className="flex items-center gap-3">
           <Link href={`/author/${authorSlug}`}>
             <img
-              src={article.author.avatarUrl}
+              src={article.author.avatarUrl || "/profile-dp.png"}
               alt={article.author.name}
               className="w-8 h-8 rounded-full object-cover flex-shrink-0 hover:opacity-90 transition-opacity"
             />

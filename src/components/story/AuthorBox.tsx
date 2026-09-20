@@ -13,7 +13,7 @@ export function AuthorBox({ author }: AuthorBoxProps) {
     <div className="flex gap-4 p-5 bg-[var(--bg-alt)] border border-[var(--line)] mt-2 font-sans">
       <Link href={`/author/${authorSlug}`}>
         <img
-          src={author.avatarUrl}
+          src={author.avatarUrl || "/profile-dp.png"}
           alt={author.name}
           className="w-16 h-16 rounded-full object-cover flex-shrink-0 hover:opacity-90 transition-opacity"
         />

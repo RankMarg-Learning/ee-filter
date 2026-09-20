@@ -59,7 +59,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
   const displayArticles = authorArticles.length > 0 ? authorArticles : allArticles.slice(0, 4);
   const authorInfo = authorArticles[0]?.author || {
     name: name,
-    avatarUrl: `https://picsum.photos/seed/${slug}/160/160`,
+    avatarUrl: `/profile-dp.png`,
     bio: `${name} is a senior esports writer covering competitive tournaments, player rosters, and balance updates across major esports circuits.`,
     role: "Senior Esports Writer",
   };
@@ -88,7 +88,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
       <div className="py-8 border-b border-[var(--line)] bg-[var(--bg-alt)] mt-4">
         <div className="wrap flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
           <img
-            src={authorInfo.avatarUrl}
+            src={authorInfo.avatarUrl || "/profile-dp.png"}
             alt={authorInfo.name}
             className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-2 border-[var(--brand)]"
           />

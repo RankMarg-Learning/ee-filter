@@ -150,18 +150,62 @@ export default function MarkdownRenderer({ content, className = "" }: MarkdownRe
                     const urlObj = new URL(videoUrl);
                     if (urlObj.hostname.includes("youtube.com") || urlObj.hostname.includes("youtu.be")) {
                       let videoId = "";
+                      let startTime = urlObj.searchParams.get("t") || urlObj.searchParams.get("start");
+                      if (startTime) {
+                        let seconds = 0;
+                        if (/^\d+$/.test(startTime)) {
+                          seconds = parseInt(startTime, 10);
+                        } else {
+                          const hours = startTime.match(/(\d+)h/);
+                          const minutes = startTime.match(/(\d+)m/);
+                          const secs = startTime.match(/(\d+)s/);
+                          if (hours) seconds += parseInt(hours[1], 10) * 3600;
+                          if (minutes) seconds += parseInt(minutes[1], 10) * 60;
+                          if (secs) seconds += parseInt(secs[1], 10);
+                        }
+                        startTime = seconds.toString();
+                      }
                       if (urlObj.hostname.includes("youtube.com")) {
-                        videoId = urlObj.searchParams.get("v") || urlObj.pathname.split("/").pop() || "";
-                      } else {
+                        if (urlObj.pathname.startsWith("/live/")) {
+                          videoId = urlObj.pathname.replace("/live/", "");
+                        } else if (urlObj.pathname.startsWith("/shorts/")) {
+                          videoId = urlObj.pathname.replace("/shorts/", "");
+                        } else if (urlObj.pathname.startsWith("/embed/")) {
+                          videoId = urlObj.pathname.replace("/embed/", "");
+                        } else {
+                          videoId = urlObj.searchParams.get("v") || "";
+                        }
+                      } else if (urlObj.hostname.includes("youtu.be")) {
                         videoId = urlObj.pathname.slice(1);
                       }
                       videoUrl = `https://www.youtube.com/embed/${videoId}`;
+                      if (startTime && startTime !== "0") {
+                        videoUrl += `?start=${startTime}`;
+                      }
+                    } else if (urlObj.hostname.includes("clips.twitch.tv")) {
+                      const clipId = urlObj.pathname.slice(1);
+                      videoUrl = `https://clips.twitch.tv/embed?clip=${clipId}&parent=localhost&parent=esportfilter.com`;
+                    } else if (urlObj.hostname.includes("twitch.tv")) {
+                      let startTime = urlObj.searchParams.get("t");
+                      const pathParts = urlObj.pathname.split("/").filter(Boolean);
+                      if ((pathParts[0] === "video" || pathParts[0] === "videos") && pathParts[1]) {
+                        videoUrl = `https://player.twitch.tv/?video=${pathParts[1]}&parent=localhost&parent=esportfilter.com`;
+                        if (startTime) {
+                          videoUrl += `&time=${startTime}`;
+                        }
+                      } else if (pathParts[1] === "clip" && pathParts[2]) {
+                        videoUrl = `https://clips.twitch.tv/embed?clip=${pathParts[2]}&parent=localhost&parent=esportfilter.com`;
+                      } else if (pathParts[0]) {
+                        videoUrl = `https://player.twitch.tv/?channel=${pathParts[0]}&parent=localhost&parent=esportfilter.com`;
+                      }
                     }
-                  } catch (e) {}
+                  } catch (e) {
+                    // Ignore invalid URL parsing
+                  }
                 }
                 return (
                   <div className="not-prose my-6 aspect-video border border-[var(--line)] bg-black rounded-[8px] overflow-hidden">
-                    <iframe src={videoUrl} className="w-full h-full" allowFullScreen />
+                    <iframe src={videoUrl} className="w-full h-full" allowFullScreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" />
                   </div>
                 );
 

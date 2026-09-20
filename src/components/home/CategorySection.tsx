@@ -2,6 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { Article } from "@/types/article";
 import { timeConvertor } from "@/utils/timeConvertor";
+import { GAME_DETAILS } from "@/data/games";
+import { slugToText } from "@/utils/textConvertor";
 
 
 interface CategorySectionProps {
@@ -55,7 +57,7 @@ export function CategorySection({
                 </h3>
                 {/* 12px Metadata per Section 11 */}
                 <span className="text-xs text-[var(--ink-faint)] font-normal block">
-                  {story.gameName || story.game} · <span suppressHydrationWarning>{timeConvertor(story.publishedAt)}</span>
+                  {story.gameName || GAME_DETAILS[story.game]?.name || slugToText(story.game)} · <span suppressHydrationWarning>{timeConvertor(story.publishedAt)}</span>
                 </span>
               </div>
             </Link>

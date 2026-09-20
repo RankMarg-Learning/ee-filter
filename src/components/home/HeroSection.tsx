@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Article, Headline } from "@/types/article";
 import { timeConvertor } from "@/utils/timeConvertor";
+import { GAME_DETAILS } from "@/data/games";
+import { slugToText } from "@/utils/textConvertor";
 
 
 interface HeroSectionProps {
@@ -16,7 +18,7 @@ export function HeroSection({
 }: HeroSectionProps) {
   const displayImage = leadStory.featuredImageUrl || leadStory.imageUrl;
   const displayDek = leadStory.excerpt || leadStory.dek;
-  const displayGame = leadStory.gameName || leadStory.game;
+  const displayGame = leadStory.gameName || GAME_DETAILS[leadStory.game]?.name || slugToText(leadStory.game);
 
   const secondaryCards = subStories.slice(0, 2);
 
@@ -54,8 +56,7 @@ export function HeroSection({
 
                 {/* Metadata (12px per Section 9) */}
                 <span className="text-xs text-[var(--ink-faint)] font-normal block">
-                  <span className="text-[var(--brand)] font-semibold">{displayGame}</span> · By{" "}
-                  {leadStory.author?.name || "VALOINFO Staff"} · <span suppressHydrationWarning>{timeConvertor(leadStory.publishedAt)}</span>
+                  <span className="text-[var(--brand)] font-semibold">{displayGame}</span> · {leadStory.author?.name || "EsportFilter Staff"} · <span suppressHydrationWarning>{timeConvertor(leadStory.publishedAt)}</span>
                 </span>
               </div>
             </Link>
@@ -90,7 +91,7 @@ export function HeroSection({
                     {story.title}
                   </h3>
                   <span className="text-xs text-[var(--ink-faint)] font-normal block">
-                    {story.gameName || story.game} · <span suppressHydrationWarning>{timeConvertor(story.publishedAt)}</span>
+                    {story.gameName || GAME_DETAILS[story.game]?.name || slugToText(story.game)} · <span suppressHydrationWarning>{timeConvertor(story.publishedAt)}</span>
                   </span>
                 </div>
               </Link>

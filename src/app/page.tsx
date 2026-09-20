@@ -29,13 +29,16 @@ export default async function HomePage() {
       </div>
 
       {/* Latest News Section (Chronological, Section 17) */}
-      <CategorySection
-        title="Latest News"
-        viewAllHref="/category/breaking-news"
-        articles={data.breakingNews}
-        maxItems={8}
-      />
-
+      {
+        data?.breakingNews?.length > 0 && (
+          <CategorySection
+            title="Latest News"
+            viewAllHref="/category/breaking-news"
+            articles={data.breakingNews}
+            maxItems={8}
+          />
+        )
+      }
 
       {/* Dedicated Advertisement Block (Section 24 & 52) */}
       <div className="wrap py-4">
@@ -46,13 +49,17 @@ export default async function HomePage() {
       {/* <SponsoredSection sponsors={data.sponsors} /> */}
 
       {/* Analysis & Patch Notes Section (Section 52 Blueprint) */}
-      <CategorySection
-        title="Guide"
-        viewAllHref="/category/guide"
-        articles={data.analysisNews}
-        bgAlt={true}
-        maxItems={4}
-      />
+      {
+        data?.analysisNews?.length > 0 && (
+          <CategorySection
+            title="Guide"
+            viewAllHref="/category/guide"
+            articles={data.analysisNews}
+            bgAlt={true}
+            maxItems={4}
+          />
+        )
+      }
 
       {/* Main Feed Section with Trending Sidebar (Section 42 & 43) */}
       <MainFeedSection feedStories={data.feedStories} headlines={data.headlines} />

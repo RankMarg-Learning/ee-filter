@@ -2,8 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { getGameFromSlug } from "@/utils/slug";
-import { enumToText } from "@/utils/textConvertor";
+import { enumToText, slugToText } from "@/utils/textConvertor";
 import {
   getArticleBySlug,
   getAllArticleSlugs,
@@ -34,7 +33,7 @@ export async function generateMetadata({ params }: StoryPageProps): Promise<Meta
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
 
-  if (!article) {
+  if (!article || article.game === 'V') {
     return {
       title: "Article Not Found — EsportFilter",
     };
@@ -59,16 +58,15 @@ export default async function StorySlugPage({ params }: StoryPageProps) {
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
 
-  if (!article) {
+  if (!article || article.game === 'V') {
     notFound();
   }
 
   const { headlines } = await getHomeData();
   const allArticles = await getAllArticles();
 
-  const gameDetail = getGameFromSlug(article.game);
-  const displayGameName = gameDetail.name;
-  const gameHref = `/game/${gameDetail.slug}`;
+  const displayGameName = slugToText(article.game);
+  const gameHref = `/game/${article.game.toLowerCase().replace(/_/g, '-')}`;
 
   // Format category from enum format (e.g. BREAKING_NEWS -> Breaking News)
   const rawCat = article.category || "News";
@@ -76,7 +74,7 @@ export default async function StorySlugPage({ params }: StoryPageProps) {
   const categoryHref = `/category/${rawCat.toLowerCase().replace(/_/g, '-')}`;
 
   const { gameRelated, sameCategory } = await getRelatedArticles(
-    gameDetail.key,
+    article.game,
     rawCat
   );
 

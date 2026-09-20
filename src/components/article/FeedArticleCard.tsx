@@ -2,6 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { Article } from "@/types/article";
 import { timeConvertor } from "@/utils/timeConvertor";
+import { GAME_DETAILS } from "@/data/games";
+import { slugToText } from "@/utils/textConvertor";
 
 interface FeedArticleCardProps {
   article: Article;
@@ -32,7 +34,7 @@ export function FeedArticleCard({ article, showGameName = false }: FeedArticleCa
         )}
         <div className="text-[var(--ink-faint)] font-sans text-[11px] mt-auto">
           {showGameName && (article.gameName || article.game)
-            ? `${article.gameName || article.game} • `
+            ? `${article.gameName || GAME_DETAILS[article.game]?.name || slugToText(article.game)} • `
             : ""}
           <span suppressHydrationWarning>{timeConvertor(article.publishedAt)}</span>
         </div>

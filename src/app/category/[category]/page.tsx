@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { getArticlesByCategory, getHomeData } from "@/services/articleService";
 import { slugToText } from "@/utils/textConvertor";
+import { timeConvertor } from "@/utils/timeConvertor";
+import { GAME_DETAILS } from "@/data/games";
 import { ArticleCategoryEnum } from "@/types/enums";
 import { FeedArticleCard } from "@/components/article/FeedArticleCard";
 
@@ -109,7 +111,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                     </p>
                   )}
                   <div className="text-[var(--ink-faint)] font-sans text-[12.5px]">
-                    <strong className="text-[var(--ink-dim)]">{leadStory.gameName || leadStory.game} • By {leadStory.author.name}</strong> • {leadStory.publishedAt}
+                    <strong className="text-[var(--ink-dim)]">{leadStory.gameName || GAME_DETAILS[leadStory.game]?.name || slugToText(leadStory.game)} • {leadStory.author?.name || "EsportFilter Staff"}</strong> • <span suppressHydrationWarning>{leadStory.publishedAt ? timeConvertor(leadStory.publishedAt) : "Recently"}</span>
                   </div>
                 </div>
               </Link>
