@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Article } from "@/types/article";
-import { timeConvertor } from "@/utils/timeConvertor";
+import { TimeAgo } from "@/components/ui/TimeAgo";
 import { GAME_DETAILS } from "@/data/games";
 
 
@@ -30,13 +30,13 @@ export function RelatedArticles({
           More on {gameName}
         </h2>
         <span className="text-[11.5px] text-[var(--ink-faint)] font-sans">
-          Matched by game & shared tags
+          Matched by game
         </span>
       </div>
 
       {/* Grid of Related Articles (up to 6) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4.5 mb-10">
-        {displayRelated.map((item) => (
+        {displayRelated.length > 0 ? displayRelated.map((item) => (
           <Link key={item.id} href={`/story/${item.slug}`} className="group block">
             <div className="overflow-hidden mb-2.5">
               <img
@@ -50,11 +50,13 @@ export function RelatedArticles({
                 {item.title}
               </h3>
               <span className="text-[11.5px] text-[var(--ink-faint)] block font-sans">
-                {GAME_DETAILS[item.game || ""]?.name || item.gameName || item.game} · <span suppressHydrationWarning>{timeConvertor(item.publishedAt)}</span>
+                {GAME_DETAILS[item.game || ""]?.name || item.gameName || item.game} · <TimeAgo date={item.publishedAt} />
               </span>
             </div>
           </Link>
-        ))}
+        )) : (
+          <p className="text-[11.5px] text-[var(--ink-faint)] font-sans">No Related Stories</p>
+        )}
       </div>
 
       {/* Author Related Section if provided */}
@@ -87,7 +89,7 @@ export function RelatedArticles({
                   {item.title}
                 </h4>
                 <span className="text-[11.5px] text-[var(--ink-faint)] block font-sans" suppressHydrationWarning>
-                  {timeConvertor(item.publishedAt)}
+                  <TimeAgo date={item.publishedAt} />
                 </span>
               </Link>
             ))}

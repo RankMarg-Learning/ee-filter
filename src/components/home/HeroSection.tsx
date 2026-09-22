@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Article, Headline } from "@/types/article";
-import { timeConvertor } from "@/utils/timeConvertor";
+import { TimeAgo } from "@/components/ui/TimeAgo";
 import { GAME_DETAILS } from "@/data/games";
 import { slugToText } from "@/utils/textConvertor";
 
@@ -56,7 +56,7 @@ export function HeroSection({
 
                 {/* Metadata (12px per Section 9) */}
                 <span className="text-xs text-[var(--ink-faint)] font-normal block">
-                  <span className="text-[var(--brand)] font-semibold">{displayGame}</span> · {leadStory.author?.name || "EsportFilter Staff"} · <span suppressHydrationWarning>{timeConvertor(leadStory.publishedAt)}</span>
+                  <span className="text-[var(--brand)] font-semibold">{displayGame}</span> · {leadStory.author?.name || "EsportFilter Staff"} · <TimeAgo date={leadStory.publishedAt} />
                 </span>
               </div>
             </Link>
@@ -91,7 +91,7 @@ export function HeroSection({
                     {story.title}
                   </h3>
                   <span className="text-xs text-[var(--ink-faint)] font-normal block">
-                    {story.gameName || GAME_DETAILS[story.game]?.name || slugToText(story.game)} · <span suppressHydrationWarning>{timeConvertor(story.publishedAt)}</span>
+                    {story.gameName || GAME_DETAILS[story.game]?.name || slugToText(story.game)} · <TimeAgo date={story.publishedAt} />
                   </span>
                 </div>
               </Link>

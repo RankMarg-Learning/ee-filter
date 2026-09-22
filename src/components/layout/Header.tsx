@@ -11,12 +11,13 @@ export interface DropdownLink {
   href: string;
   badge?: string;
   date?: string;
+  hidden?: boolean;
 }
 
 export interface DropdownGroup {
   title: string;
   links: DropdownLink[];
-  viewAll?: { label: string; href: string };
+  hidden?: boolean;
 }
 
 export interface NavItem {
@@ -25,12 +26,14 @@ export interface NavItem {
   layout?: "columns" | "stacked";
   href?: string;
   groups?: DropdownGroup[];
+  hidden?: boolean;
 }
 
 export interface CategoryItem {
   name: string;
   slug: string;
   key?: string;
+  hidden?: boolean;
 }
 
 export interface HeaderProps {
@@ -53,7 +56,7 @@ export function Header({ mainNavItems = [], categoryNavItems = [] }: HeaderProps
 
         {/* Desktop Main Navigation (Section 5 & 11: text-sm font-medium) */}
         <nav className="hidden md:flex gap-6 flex-1">
-          {mainNavItems.map((item) => {
+          {mainNavItems.filter(item => !item.hidden).map((item) => {
             const isDropdown = item.type === "dropdown";
 
             if (!isDropdown) {
@@ -89,11 +92,11 @@ export function Header({ mainNavItems = [], categoryNavItems = [] }: HeaderProps
 
                     {/* Standard Dropdown Groups */}
                     <div className={`w-full flex gap-4 ${item.layout === 'stacked' ? 'flex-col' : 'flex-wrap'}`}>
-                      {item.groups?.map((group, idx) => (
+                      {item.groups?.filter(g => !g.hidden).map((group, idx) => (
                         <div key={idx} className={item.layout === 'stacked' ? 'w-full' : 'flex-1 min-w-[200px]'}>
                           <h4 className="text-xs font-bold text-[var(--ink-dim)] uppercase tracking-wider mb-4">{group.title}</h4>
                           <ul className="flex flex-col gap-1">
-                            {group.links?.map((link, lIdx) => (
+                            {group.links?.filter(l => !l.hidden).map((link, lIdx) => (
                               <li key={lIdx}>
                                 <Link href={link.href || "#"} className="group/link flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 px-2 py-1.5 -mx-2 rounded-md hover:bg-[var(--bg-alt)] transition-colors">
                                   <span className="text-[13px] font-medium text-[var(--ink)] group-hover/link:text-[var(--brand)] transition-colors line-clamp-1" title={link.label}>
@@ -163,7 +166,7 @@ export function Header({ mainNavItems = [], categoryNavItems = [] }: HeaderProps
       {/* Category / Game Navigation Bar */}
       <nav className="border-t border-[var(--line)] overflow-x-auto no-scrollbar" aria-label="Games filter">
         <ul className="flex list-none h-[40px] min-w-max">
-          {categoryNavItems.map((game) => {
+          {categoryNavItems.filter(game => !game.hidden).map((game) => {
             const targetHref = game.slug === "all" ? "/" : `/game/${game.slug}`;
             const isActive =
               game.slug === "all"

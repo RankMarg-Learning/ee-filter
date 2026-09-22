@@ -8,7 +8,7 @@ import {
   getAllArticleSlugs,
   getRelatedArticles,
   getHomeData,
-  getAllArticles,
+  getArticlesByAuthor,
 } from "@/services/articleService";
 import { ArticleHeader } from "@/components/story/ArticleHeader";
 import { ArticleBody } from "@/components/story/ArticleBody";
@@ -63,26 +63,23 @@ export default async function StorySlugPage({ params }: StoryPageProps) {
   }
 
   const { headlines } = await getHomeData();
-  const allArticles = await getAllArticles();
 
   const displayGameName = slugToText(article.game);
   const gameHref = `/game/${article.game.toLowerCase().replace(/_/g, '-')}`;
 
-  // Format category from enum format (e.g. BREAKING_NEWS -> Breaking News)
   const rawCat = article.category || "News";
   const displayCategoryName = article.categoryLabel || enumToText(rawCat);
   const categoryHref = `/category/${rawCat.toLowerCase().replace(/_/g, '-')}`;
 
   const { gameRelated, sameCategory } = await getRelatedArticles(
     article.game,
-    rawCat
+    rawCat,
+    article.slug
   );
 
-  const authorRelated = allArticles.filter(
-    (a) => a.author?.name === article.author?.name && a.slug !== article.slug
-  );
+  const authorRelated = await getArticlesByAuthor(article.author?.id, article.slug);
 
-  const nextStory = gameRelated[0] || sameCategory[0] || allArticles[0];
+  const nextStory = gameRelated[0] || sameCategory[0] || authorRelated[0] || headlines[0];
 
   return (
     <div className="w-full relative">

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Headline } from "@/types/article";
 import { AdSlot } from "@/components/ui/AdSlot";
 import { CATEGORY_BAR_GAMES } from "@/data/games";
+import { TimeAgo } from "@/components/ui/TimeAgo";
 
 interface SidebarProps {
   trendingArticles?: Headline[];
@@ -45,7 +46,9 @@ export function Sidebar({ trendingArticles = [], gameTitle = "Esports" }: Sideba
               <h4 className="text-[13px] font-bold text-[var(--ink)] leading-snug group-hover:text-[var(--brand)] transition-colors line-clamp-2 mb-1.5">
                 {article.title}
               </h4>
-              <span className="text-[10px] text-[var(--ink-faint)] font-mono">{article.timeAgo}</span>
+              <span className="text-[10px] text-[var(--ink-faint)] font-mono">
+                {article.publishedAt ? <TimeAgo date={article.publishedAt} /> : article.timeAgo}
+              </span>
             </Link>
           ))}
         </div>

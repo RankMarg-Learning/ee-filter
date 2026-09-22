@@ -10,6 +10,7 @@ interface ArticleBodyProps {
 }
 
 export function ArticleBody({ article }: ArticleBodyProps) {
+
   const displayImage = article.featuredImageUrl || article.imageUrl;
   const displayDek = article.excerpt || article.dek;
 
@@ -83,13 +84,13 @@ export function ArticleBody({ article }: ArticleBodyProps) {
           <span className="text-xs text-[var(--ink-faint)] font-semibold uppercase tracking-wide font-sans">
             Tagged
           </span>
-          {article.tags.map((tag, idx) => {
-            const tagName = typeof tag === "string" ? tag : tag.name;
-            const tagKey = typeof tag === "string" ? tag : tag.slug || tag.id || idx;
+          {article.tags.map((tag: any, idx) => {
+            const tagName = typeof tag === "string" ? tag : (tag?.tag?.name || tag?.name);
+            const tagKey = typeof tag === "string" ? tag : (tag?.tag?.slug || tag?.slug || tag?.tag?.id || tag?.id || idx);
             return (
               <Link
                 key={tagKey}
-                href="#"
+                href={`/tags/${tagKey}`}
                 className="text-xs text-[var(--ink-dim)] border border-[var(--line)] px-2.5 py-1 rounded-[4px] font-sans hover:text-[var(--brand)] hover:border-[var(--brand)] transition-colors"
               >
                 {tagName}

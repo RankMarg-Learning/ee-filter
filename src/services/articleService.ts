@@ -23,7 +23,8 @@ export async function getHomeData(): Promise<{
       ...h,
       number: i + 1,
       gameName: h.gameName || GAME_DETAILS[h.game]?.name || slugToText(h.game) || 'Esports',
-      timeAgo: 'Recently'
+      timeAgo: 'Recently',
+      publishedAt: h.publishedAt || h.createdAt
     })) || [];
 
     return data;
@@ -94,15 +95,31 @@ export async function getArticlesByCategory(categorySlug: string): Promise<Artic
   }
 }
 
-export async function getRelatedArticles(gameKey: string, category: string) {
+export async function getArticlesByAuthor(authorId: string | undefined, excludeSlug?: string): Promise<Article[]> {
+  if (!authorId) return [];
   try {
-    // Basic implementation for now, using the same category data
-    const res = await fetch(`${API_BASE_URL}/articles/ef/category/${category}`, { next: { tags: ['articles', `category-${category}`] } });
+    const res = await fetch(`${API_BASE_URL}/articles?limit=10&isPublished=true&authorId=${authorId}`, { next: { tags: ['articles', `author-${authorId}`] } });
+    if (!res.ok) throw new Error("Failed to fetch author articles");
+    const json = await res.json();
+    let articles: Article[] = json.data?.records || [];
+    if (excludeSlug) articles = articles.filter(a => a.slug !== excludeSlug);
+    return articles;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+export async function getRelatedArticles(gameKey: string, category: string, excludeSlug?: string) {
+  try {
+    const res = await fetch(`${API_BASE_URL}/articles/ef/game/${gameKey}`, { next: { tags: ['articles', `game-${gameKey}`] } });
     if (!res.ok) throw new Error("Failed to fetch related data");
     const json = await res.json();
+    let gameRelated: Article[] = json.data?.articles || [];
+    if (excludeSlug) gameRelated = gameRelated.filter(a => a.slug !== excludeSlug);
     return {
-      gameRelated: json.data.articles || [],
-      sameCategory: json.data.articles || [],
+      gameRelated,
+      sameCategory: [],
     };
   } catch (error) {
     console.error(error);

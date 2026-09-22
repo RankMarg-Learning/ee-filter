@@ -44,11 +44,13 @@ export default async function RootLayout({
 }) {
   let headerData: any = FALLBACK_NAV;
   try {
-    const res = await fetch("https://cdn.valoinfo.com/config/ef_header2.json", {
+    const res = await fetch("https://api.jsonbin.io/v3/b/6ab2b8e3ffd5d1605323be40/latest", {
+      cache: "force-cache",
       next: { tags: ["header-config"] }, // Revalidate on-demand via API
     });
     if (res.ok) {
-      headerData = await res.json();
+      const data = await res.json();
+      headerData = data.record || data;
     }
   } catch (error) {
     console.error("Failed to fetch header config:", error);
@@ -58,7 +60,23 @@ export default async function RootLayout({
     <html
       lang="en"
       className={`${publicSans.variable} ${oswald.variable} ${ibmPlexMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (localStorage.getItem('ef_theme') === 'dark' || (!('ef_theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                  document.documentElement.classList.add('dark');
+                } else {
+                  document.documentElement.classList.remove('dark');
+                }
+              } catch (_) {}
+            `,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-[var(--bg)] text-[var(--ink)] font-sans">
         {/* Google Analytics GA4 Scripts */}
         <Script

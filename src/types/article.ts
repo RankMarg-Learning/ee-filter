@@ -72,6 +72,7 @@ export interface Headline {
   slug: string;
   gameName: string;
   timeAgo: string;
+  publishedAt?: string;
 }
 
 export interface SponsorCard {

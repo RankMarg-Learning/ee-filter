@@ -8,12 +8,14 @@
         {
             "type": "link",
             "label": "Breaking News",
-            "href": "/category/breaking-news"
+            "href": "/category/breaking-news",
+            "hidden": true
         },
         {
             "type": "dropdown",
             "layout": "stacked",
             "label": "Tournaments",
+            "hidden": true,
             "groups": [
                 {
                     "title": "All Tournaments",
@@ -39,11 +41,7 @@
                             "href": "/tournaments/iem-katowice-2024",
                             "badge": "Resulted"
                         }
-                    ],
-                    "viewAll": {
-                        "label": "View All Tournaments",
-                        "href": "/tournaments"
-                    }
+                    ]
                 }
             ]
         },
@@ -66,11 +64,7 @@
                             "label": "VCT Pacific",
                             "href": "/standings/vct-pacific"
                         }
-                    ],
-                    "viewAll": {
-                        "label": "View All Valorant",
-                        "href": "/standings/valorant"
-                    }
+                    ]
                 },
                 {
                     "title": "CS2",
@@ -79,11 +73,7 @@
                             "label": "ESL World Ranking",
                             "href": "/standings/esl-ranking"
                         }
-                    ],
-                    "viewAll": {
-                        "label": "View All CS2",
-                        "href": "/standings/cs2"
-                    }
+                    ]
                 }
             ]
         }
@@ -117,7 +107,8 @@
         {
             "name": "MLBB",
             "slug": "mlbb",
-            "key": "MLBB"
+            "key": "MLBB",
+            "hidden": true
         },
         {
             "name": "PUBG",

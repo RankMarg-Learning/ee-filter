@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Article } from "@/types/article";
-import { timeConvertor } from "@/utils/timeConvertor";
+import { TimeAgo } from "@/components/ui/TimeAgo";
 import { GAME_DETAILS } from "@/data/games";
 import { slugToText } from "@/utils/textConvertor";
 
@@ -36,7 +36,7 @@ export function FeedArticleCard({ article, showGameName = false }: FeedArticleCa
           {showGameName && (article.gameName || article.game)
             ? `${article.gameName || GAME_DETAILS[article.game]?.name || slugToText(article.game)} • `
             : ""}
-          <span suppressHydrationWarning>{timeConvertor(article.publishedAt)}</span>
+          <TimeAgo date={article.publishedAt} />
         </div>
       </div>
     </Link>
