@@ -19,13 +19,21 @@ export async function getHomeData(): Promise<{
     const json = await res.json();
 
     const data = json.data;
-    data.headlines = data.headlines?.map((h: any, i: number) => ({
+    
+    // Helper to filter out V (Valorant) games as they belong to Valoinfo
+    const filterVGames = (arr: any[]) => arr?.filter(item => item.game !== 'V' && item.gameName !== 'Valorant') || [];
+
+    data.headlines = filterVGames(data.headlines).map((h: any, i: number) => ({
       ...h,
       number: i + 1,
       gameName: h.gameName || GAME_DETAILS[h.game]?.name || slugToText(h.game) || 'Esports',
       timeAgo: 'Recently',
       publishedAt: h.publishedAt || h.createdAt
-    })) || [];
+    }));
+    data.breakingNews = filterVGames(data.breakingNews);
+    data.analysisNews = filterVGames(data.analysisNews);
+    data.feedStories = filterVGames(data.feedStories);
+    data.featuredArticles = filterVGames(data.featuredArticles);
 
     return data;
   } catch (error) {
