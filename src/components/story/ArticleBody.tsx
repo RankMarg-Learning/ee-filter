@@ -23,6 +23,8 @@ export function ArticleBody({ article }: ArticleBodyProps) {
             src={displayImage}
             alt={article.imageAlt || article.title}
             fill
+            priority
+            sizes="(max-width: 1024px) 100vw, 800px"
             className="object-cover"
           />
         </div>
@@ -78,6 +80,21 @@ export function ArticleBody({ article }: ArticleBodyProps) {
         )}
       </div>
 
+      {/* Google News Source Link */}
+      <div className="mt-6 mb-2 flex justify-center">
+        <a
+          href="https://www.google.com/preferences/source?q=esportfilter.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-sm font-bold text-[var(--brand)] hover:underline font-sans"
+        >
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M21.35 11.1h-9.17v2.73h6.51c-.33 3.81-3.5 5.44-6.5 5.44C8.36 19.27 5 16.25 5 12c0-4.1 3.2-7.27 7.2-7.27 3.09 0 4.9 1.97 4.9 1.97L19 4.72S16.56 2 12.1 2C6.42 2 2.03 6.8 2.03 12c0 5.05 4.13 10 10.22 10 5.35 0 9.25-3.67 9.25-9.09 0-1.15-.15-1.81-.15-1.81z" />
+          </svg>
+          Add Esport Filter as a preferred source on Google
+        </a>
+      </div>
+
       {/* Tags Block */}
       {article.tags && article.tags.length > 0 && (
         <div className="py-5 border-t border-[var(--line)] mt-8 flex items-center gap-2.5 flex-wrap">
@@ -88,13 +105,11 @@ export function ArticleBody({ article }: ArticleBodyProps) {
             const tagName = typeof tag === "string" ? tag : (tag?.tag?.name || tag?.name);
             const tagKey = typeof tag === "string" ? tag : (tag?.tag?.slug || tag?.slug || tag?.tag?.id || tag?.id || idx);
             return (
-              <Link
-                key={tagKey}
-                href={`/tags/${tagKey}`}
-                className="text-xs text-[var(--ink-dim)] border border-[var(--line)] px-2.5 py-1 rounded-[4px] font-sans hover:text-[var(--brand)] hover:border-[var(--brand)] transition-colors"
+              <p
+                className="text-xs text-[var(--ink-dim)] border border-[var(--line)] px-2.5 py-1 rounded-[4px] font-sans"
               >
                 {tagName}
-              </Link>
+              </p>
             );
           })}
         </div>

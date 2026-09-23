@@ -42,25 +42,25 @@ export default function MarkdownRenderer({ content, className = "" }: MarkdownRe
           },
           table({ node, ...props }: any) {
             return (
-              <div className="w-full overflow-x-auto my-6 border border-[var(--line)] rounded-[8px]">
-                <table className="w-full text-left border-collapse text-xs" {...props} />
+              <div className="not-prose w-full overflow-x-auto my-6 border border-[var(--line)] rounded-[8px]">
+                <table className="w-full text-left border-collapse" {...props} />
               </div>
             );
           },
           thead({ node, ...props }: any) {
-            return <thead className="bg-[var(--bg-alt)] border-b border-[var(--line)]" {...props} />;
+            return <thead className="bg-[var(--bg-alt)]" {...props} />;
           },
           tbody({ node, ...props }: any) {
-            return <tbody className="bg-[var(--card-bg)]" {...props} />;
+            return <tbody className="divide-y divide-[var(--line)] bg-[var(--card-bg)]" {...props} />;
           },
           tr({ node, ...props }: any) {
-            return <tr className="border-b border-[var(--line)] last:border-b-0 hover:bg-[var(--bg-alt)] transition-colors" {...props} />;
+            return <tr className="hover:bg-[var(--bg-alt)] transition-colors text-[14px] text-[var(--ink)]" {...props} />;
           },
           th({ node, ...props }: any) {
-            return <th className="px-3 py-2 font-mono text-[11px] font-semibold text-[var(--ink-dim)] tracking-wider uppercase text-left" {...props} />;
+            return <th className="px-4 py-2 font-mono text-[12px] font-bold tracking-wider text-[var(--ink-dim)] uppercase border-b border-[var(--line)] transition-colors whitespace-nowrap select-none" {...props} />;
           },
           td({ node, ...props }: any) {
-            return <td className="px-3 py-2 text-xs font-normal text-[var(--ink)] align-top" {...props} />;
+            return <td className="px-4 py-1.5 whitespace-nowrap font-medium align-top" {...props} />;
           },
           code(props: any) {
             const { children, className, node, ...rest } = props;

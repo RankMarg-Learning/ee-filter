@@ -185,7 +185,7 @@ export const InteractiveTable = ({ data }: { data: any }) => {
               <th
                 key={i}
                 onClick={() => handleSort(i)}
-                className="px-4 py-3 text-[12px] font-heading font-bold tracking-wider text-[var(--ink-dim)] uppercase border-b border-[var(--line)] cursor-pointer hover:text-[var(--ink)] transition-colors whitespace-nowrap select-none group"
+                className="px-4 py-2 text-[12px] font-heading font-bold tracking-wider text-[var(--ink-dim)] uppercase border-b border-[var(--line)] cursor-pointer hover:text-[var(--ink)] transition-colors whitespace-nowrap select-none group"
               >
                 <div className="flex items-center gap-1.5">
                   {h}
@@ -206,7 +206,7 @@ export const InteractiveTable = ({ data }: { data: any }) => {
             sortedRows.map((row, i) => (
               <tr key={i} className="hover:bg-[var(--bg-alt)] transition-colors text-[14px] text-[var(--ink)]">
                 {row.map((cell: any, j: number) => (
-                  <td key={j} className="px-4 py-3.5 whitespace-nowrap font-medium">{cell}</td>
+                  <td key={j} className="px-4 py-1.5 whitespace-nowrap font-medium">{cell}</td>
                 ))}
               </tr>
             ))
@@ -456,25 +456,30 @@ export const HeadToHeadBlock = ({ data }: { data: any }) => {
         {stats.map((stat: any, i: number) => {
           const val1 = stat.value1 ?? stat.team1Value ?? stat.player1Value;
           const val2 = stat.value2 ?? stat.team2Value ?? stat.player2Value;
+          const sub1 = stat.subtext1 ?? stat.team1Subtext ?? stat.player1Subtext;
+          const sub2 = stat.subtext2 ?? stat.team2Subtext ?? stat.player2Subtext;
           const num1 = parseFloat(val1);
           const num2 = parseFloat(val2);
           let t1Win = false;
+          let t2Win = false;
           if (!isNaN(num1) && !isNaN(num2)) {
             t1Win = num1 > num2;
+            t2Win = num2 > num1;
           } else {
             t1Win = val1 > val2;
+            t2Win = val2 > val1;
           }
 
           return (
             <div key={i} className="flex justify-between items-center text-[14px]">
               <span className={`font-bold w-1/3 text-left ${t1Win ? "text-[var(--brand)]" : "text-[var(--ink-dim)]"}`}>
-                {val1}
+                {val1} {sub1 && <span className="text-[10px] text-[var(--ink-faint)] ml-1">{sub1}</span>}
               </span>
               <span className="text-[var(--ink-faint)] text-[12px] font-mono font-semibold uppercase tracking-wider w-1/3 text-center bg-[var(--bg-alt)] py-1">
                 {stat.label}
               </span>
-              <span className={`font-bold w-1/3 text-right ${!t1Win ? "text-[var(--brand)]" : "text-[var(--ink-dim)]"}`}>
-                {val2}
+              <span className={`font-bold w-1/3 text-right ${t2Win ? "text-[var(--brand)]" : "text-[var(--ink-dim)]"}`}>
+                {sub2 && <span className="text-[10px] text-[var(--ink-faint)] mr-1">{sub2}</span>} {val2}
               </span>
             </div>
           );

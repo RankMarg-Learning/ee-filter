@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useCallback, useRef, useMemo } from "react";
 import Link from "next/link";
 import { Article, Headline } from "@/types/article";
 import { FeedArticleCard } from "@/components/article/FeedArticleCard";
@@ -15,10 +15,32 @@ interface MainFeedSectionProps {
 
 export function MainFeedSection({ feedStories, headlines = [] }: MainFeedSectionProps) {
   const [displayCount, setDisplayCount] = useState(5);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
-  const handleLoadMore = () => {
+  const displayedStories = useMemo(
+    () => feedStories.slice(0, displayCount),
+    [feedStories, displayCount]
+  );
+
+  const handleLoadMore = useCallback(() => {
     setDisplayCount((prev) => prev + 5);
-  };
+  }, []);
+
+  const loadMoreCallbackRef = useCallback((node: HTMLDivElement | null) => {
+    if (observerRef.current) observerRef.current.disconnect();
+
+    if (node) {
+      observerRef.current = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            setDisplayCount((prev) => prev + 5);
+          }
+        },
+        { threshold: 0.1, rootMargin: "150px" }
+      );
+      observerRef.current.observe(node);
+    }
+  }, []);
 
   return (
     <section className="pt-10 pb-[80px]">
@@ -33,42 +55,20 @@ export function MainFeedSection({ feedStories, headlines = [] }: MainFeedSection
           </div>
 
           <div className="flex flex-col">
-            {feedStories.slice(0, displayCount).map((item, idx) => (
+            {displayedStories.map((item, idx) => (
               <React.Fragment key={item.id || idx}>
                 <FeedArticleCard article={item} showGameName={true} />
-
-                {/* Inline Native Ads inserted after 1st and 3rd feed items */}
-                {idx === 0 && (
-                  <div className="py-5 border-b border-[var(--line)]">
-                    <AdSlot
-                      type="native"
-                      title="Gear built for the grind — pro-series peripherals, 20% off this week"
-                      sponsorName="RailGrip"
-                      imageUrl="https://picsum.photos/seed/nativeadv2/240/160"
-                    />
-                  </div>
-                )}
-                {idx === 2 && (
-                  <div className="py-5 border-b border-[var(--line)]">
-                    <AdSlot
-                      type="native"
-                      title="Level up your setup — monitors built for 240Hz competitive play"
-                      sponsorName="ClearFrame"
-                      imageUrl="https://picsum.photos/seed/nativeadv3/240/160"
-                    />
-                  </div>
-                )}
               </React.Fragment>
             ))}
           </div>
 
           {displayCount < feedStories.length && (
-            <div className="text-center pt-8">
+            <div ref={loadMoreCallbackRef} className="text-center pt-8">
               <button
                 onClick={handleLoadMore}
                 className="border border-[var(--line)] bg-[var(--bg)] text-[var(--ink)] px-8 py-2.5 font-bold text-[13px] cursor-pointer font-sans hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors"
               >
-                Load more stories
+                Loading more stories...
               </button>
             </div>
           )}

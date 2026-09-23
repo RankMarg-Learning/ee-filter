@@ -4,6 +4,9 @@ import { slugToText } from "@/utils/textConvertor";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api/v1";
 
+// Helper to filter out V (Valorant) games as they belong to Valoinfo
+const filterVGames = (arr: any[]) => arr?.filter(item => item.game !== 'V') || [];
+
 export async function getHomeData(): Promise<{
   leadStory: Article;
   headlines: Headline[];
@@ -19,9 +22,6 @@ export async function getHomeData(): Promise<{
     const json = await res.json();
 
     const data = json.data;
-    
-    // Helper to filter out V (Valorant) games as they belong to Valoinfo
-    const filterVGames = (arr: any[]) => arr?.filter(item => item.game !== 'V' && item.gameName !== 'Valorant') || [];
 
     data.headlines = filterVGames(data.headlines).map((h: any, i: number) => ({
       ...h,
@@ -84,7 +84,7 @@ export async function getArticlesByGame(gameSlugOrKey: string): Promise<Article[
     const res = await fetch(`${API_BASE_URL}/articles/ef/game/${gameSlugOrKey}`, { next: { tags: ['articles', `game-${gameSlugOrKey}`] } });
     if (!res.ok) throw new Error("Failed to fetch game data");
     const json = await res.json();
-    return json.data.articles || [];
+    return filterVGames(json.data.articles || []);
   } catch (error) {
     console.error(error);
     return [];
@@ -96,7 +96,7 @@ export async function getArticlesByCategory(categorySlug: string): Promise<Artic
     const res = await fetch(`${API_BASE_URL}/articles/ef/category/${categorySlug}`, { next: { tags: ['articles', `category-${categorySlug}`] } });
     if (!res.ok) throw new Error("Failed to fetch category data");
     const json = await res.json();
-    return json.data.articles || [];
+    return filterVGames(json.data.articles || []);
   } catch (error) {
     console.error(error);
     return [];
@@ -109,7 +109,7 @@ export async function getArticlesByAuthor(authorId: string | undefined, excludeS
     const res = await fetch(`${API_BASE_URL}/articles?limit=10&isPublished=true&authorId=${authorId}`, { next: { tags: ['articles', `author-${authorId}`] } });
     if (!res.ok) throw new Error("Failed to fetch author articles");
     const json = await res.json();
-    let articles: Article[] = json.data?.records || [];
+    let articles: Article[] = filterVGames(json.data?.records || []);
     if (excludeSlug) articles = articles.filter(a => a.slug !== excludeSlug);
     return articles;
   } catch (error) {
@@ -123,7 +123,7 @@ export async function getRelatedArticles(gameKey: string, category: string, excl
     const res = await fetch(`${API_BASE_URL}/articles/ef/game/${gameKey}`, { next: { tags: ['articles', `game-${gameKey}`] } });
     if (!res.ok) throw new Error("Failed to fetch related data");
     const json = await res.json();
-    let gameRelated: Article[] = json.data?.articles || [];
+    let gameRelated: Article[] = filterVGames(json.data?.articles || []);
     if (excludeSlug) gameRelated = gameRelated.filter(a => a.slug !== excludeSlug);
     return {
       gameRelated,
