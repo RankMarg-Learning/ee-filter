@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     const paths = Array.isArray(body.paths) ? body.paths : (body.path ? [body.path] : []);
 
     const tagQuery = searchParams.get('tag');
-    if (tagQuery && tags.length === 0) {
+    if (tagQuery && !tags.includes(tagQuery)) {
       tags.push(tagQuery);
     }
 
