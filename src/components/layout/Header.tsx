@@ -65,10 +65,14 @@ export function Header({ mainNavItems = [], categoryNavItems = [] }: HeaderProps
                 pathname === href ||
                 (href !== "/" && href !== "#" && pathname.startsWith(href));
 
+              const isExternal = href.startsWith("http");
+
               return (
                 <Link
                   key={item.label}
                   href={href}
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noopener noreferrer" : undefined}
                   className={`text-sm border-b-2 transition-colors flex items-center h-full ${isActive
                     ? "font-semibold text-[var(--ink)] border-[var(--brand)]"
                     : "font-medium text-[var(--ink-dim)] border-transparent hover:text-[var(--ink)]"
@@ -96,9 +100,18 @@ export function Header({ mainNavItems = [], categoryNavItems = [] }: HeaderProps
                         <div key={idx} className={item.layout === 'stacked' ? 'w-full' : 'flex-1 min-w-[200px]'}>
                           <h4 className="text-xs font-bold text-[var(--ink-dim)] uppercase tracking-wider mb-4">{group.title}</h4>
                           <ul className="flex flex-col gap-1">
-                            {group.links?.filter(l => !l.hidden).map((link, lIdx) => (
+                            {group.links?.filter(l => !l.hidden).map((link, lIdx) => {
+                              const linkHref = link.href || "#";
+                              const isExternal = linkHref.startsWith("http");
+                              
+                              return (
                               <li key={lIdx}>
-                                <Link href={link.href || "#"} className="group/link flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 px-2 py-1.5 -mx-2 rounded-md hover:bg-[var(--bg-alt)] transition-colors">
+                                <Link 
+                                  href={linkHref} 
+                                  target={isExternal ? "_blank" : undefined}
+                                  rel={isExternal ? "noopener noreferrer" : undefined}
+                                  className="group/link flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 px-2 py-1.5 -mx-2 rounded-md hover:bg-[var(--bg-alt)] transition-colors"
+                                >
                                   <span className="text-[13px] font-medium text-[var(--ink)] group-hover/link:text-[var(--brand)] transition-colors line-clamp-1" title={link.label}>
                                     {link.label}
                                   </span>
@@ -115,7 +128,8 @@ export function Header({ mainNavItems = [], categoryNavItems = [] }: HeaderProps
                                   </div>
                                 </Link>
                               </li>
-                            ))}
+                              );
+                            })}
                           </ul>
 
                         </div>
