@@ -7,7 +7,8 @@ export const enumToText = (enumName?: string | null): string => {
         .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
-export const slugToText = (slug: string): string => {
+export const slugToText = (slug?: string | null): string => {
+    if (!slug) return '';
     return slug
         .replace(/-/g, ' ')
         .toLowerCase()
