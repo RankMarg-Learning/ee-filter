@@ -8,7 +8,7 @@ import { FeedArticleCard } from "@/components/article/FeedArticleCard";
 
 import { Sidebar } from "@/components/layout/Sidebar";
 
-
+export const revalidate = 900;
 
 interface GamePageProps {
   params: Promise<{ game: string }>;

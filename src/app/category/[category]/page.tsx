@@ -10,7 +10,7 @@ import { FeedArticleCard } from "@/components/article/FeedArticleCard";
 
 import { Sidebar } from "@/components/layout/Sidebar";
 
-
+export const revalidate = 900;
 
 interface CategoryPageProps {
   params: Promise<{ category: string }>;

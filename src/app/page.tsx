@@ -1,10 +1,10 @@
-import React from "react";
 import { getHomeData } from "@/services/articleService";
 import { HeroSection } from "@/components/home/HeroSection";
 import { CategorySection } from "@/components/home/CategorySection";
 import { MainFeedSection } from "@/components/home/MainFeedSection";
 import { AdSlot } from "@/components/ui/AdSlot";
-import { GAMES } from "@/data/games";
+
+export const revalidate = 900;
 
 export default async function HomePage() {
   const data = await getHomeData();
@@ -20,7 +20,7 @@ export default async function HomePage() {
       <HeroSection
         leadStory={data.leadStory}
         headlines={data.headlines}
-        subStories={data.featuredArticles?.length > 1 ? data.featuredArticles.slice(1, 3) : data.breakingNews.slice(0, 2)}
+        subStories={data.featuredArticles?.length > 1 ? data.featuredArticles.slice(1, 4) : data.breakingNews.slice(0, 3)}
       />
 
       {/* Dedicated Advertisement Block (Section 24) */}
