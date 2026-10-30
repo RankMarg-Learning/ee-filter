@@ -20,7 +20,7 @@ export function HeroSection({
   const displayDek = leadStory.excerpt || leadStory.dek;
   const displayGame = leadStory.gameName || GAME_DETAILS[leadStory.game]?.name || slugToText(leadStory.game);
 
-  const secondaryCards = subStories.slice(0, 2);
+  const secondaryCards = subStories.slice(0, 4);
 
   return (
     <section className="py-4 border-b border-[var(--line)] font-sans">

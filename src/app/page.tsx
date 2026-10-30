@@ -9,6 +9,7 @@ export const revalidate = 900;
 export default async function HomePage() {
   const data = await getHomeData();
 
+
   return (
     <div className="w-full">
       {/* Top Banner Ad (Reserved height, Section 23 & 30) */}
@@ -20,7 +21,7 @@ export default async function HomePage() {
       <HeroSection
         leadStory={data.leadStory}
         headlines={data.headlines}
-        subStories={data.featuredArticles?.length > 1 ? data.featuredArticles.slice(1, 4) : data.breakingNews.slice(0, 3)}
+        subStories={data.featuredArticles?.length > 1 ? data.featuredArticles.slice(1, 5) : data.breakingNews.slice(0, 4)}
       />
 
       {/* Dedicated Advertisement Block (Section 24) */}
